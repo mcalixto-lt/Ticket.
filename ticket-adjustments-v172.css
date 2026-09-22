@@ -1,0 +1,20 @@
+/* Ticket. 1.0.72 — quatro itens no dock, uma cor e estados da jornada. */
+#app .glass-dock{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+#app .glass-dock button,#app .glass-dock button:nth-child(n){color:#7447cf!important}
+#app .glass-dock button .dock-premium-svg-v154,#app .glass-dock button:nth-child(n) .dock-premium-svg-v154{color:#7447cf!important;background:rgba(116,71,207,.1)!important}
+
+.ticket-time-pair172{display:grid!important;grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr)!important;gap:8px!important;align-items:end!important}
+.ticket-time-divider172{display:grid;place-items:center;height:50px;color:#7447cf;font-size:24px;font-style:normal;font-weight:300;animation:ticketDivider172 1.65s ease-in-out infinite}
+@keyframes ticketDivider172{0%,100%{opacity:.32;transform:translateY(0)}50%{opacity:1;transform:translateY(-2px)}}
+
+.home-journey-link-v152{align-self:start!important;display:block!important;position:relative!important;height:2px!important;margin-top:28px!important;border:0!important;border-radius:2px;background:#b7bdc9!important;opacity:.58}
+.home-journey-link-v152::after{content:''!important;position:absolute!important;right:0!important;top:50%!important;width:5px!important;height:5px!important;border-top:2px solid currentColor!important;border-right:2px solid currentColor!important;color:#9ca5b5;transform:translateY(-50%) rotate(45deg)!important}
+.home-journey-link-v152.is-next{color:#f3a12f!important;background:#f3a12f!important;box-shadow:0 0 8px rgba(243,161,47,.38)!important;animation:homeJourneyArrowNext172 1.2s ease-in-out infinite!important}
+.home-journey-link-v152.is-done{color:#20b778!important;background:#20b778!important;box-shadow:0 0 7px rgba(32,183,120,.28)!important;animation:homeJourneyArrowDone172 1.5s ease-in-out infinite!important}
+@keyframes homeJourneyArrowNext172{0%,100%{opacity:.38;transform:translateX(0)}50%{opacity:1;transform:translateX(1px)}}
+@keyframes homeJourneyArrowDone172{0%,100%{opacity:.64}50%{opacity:1}}
+
+.notification-bell-v151.has-alert>i{width:11px!important;height:11px!important;right:4px!important;top:3px!important;border-width:2px!important;background:#ef3340!important;box-shadow:0 0 0 4px rgba(239,51,64,.16)!important;animation:ticketAlertDot172 1.25s ease-in-out infinite!important}
+@keyframes ticketAlertDot172{0%,100%{transform:scale(.92)}50%{transform:scale(1.14);box-shadow:0 0 0 6px rgba(239,51,64,.07)}}
+
+@media(prefers-reduced-motion:reduce){.ticket-time-divider172,.home-journey-link-v152.is-next,.home-journey-link-v152.is-done,.notification-bell-v151.has-alert>i{animation-duration:2.8s!important}}

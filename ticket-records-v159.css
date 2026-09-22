@@ -1,0 +1,13 @@
+.calendar-selectors-v161{display:grid;grid-template-columns:minmax(0,1.3fr) 24px minmax(0,1fr);align-items:center;width:min(390px,100%);gap:5px}
+.calendar-selectors-v161 label{display:grid;gap:4px;padding:10px 15px;border:1px solid white;border-radius:20px;background:rgba(255,255,255,.55);backdrop-filter:blur(24px);box-shadow:0 8px 24px #44376e0d;min-width:0}
+.calendar-selectors-v161 label>span{font-size:.65rem;color:#798398}
+.calendar-selectors-v161 select{width:100%;min-width:0;min-height:32px;border:0;background:transparent;color:#263145;font-size:1rem;font-weight:700;cursor:pointer}
+.calendar-divider-v161{text-align:center;color:#7447cf;font-size:26px;animation:calendarDividerFloat 3s ease-in-out infinite;pointer-events:none}
+@keyframes calendarDividerFloat{0%,100%{transform:translateY(-2px);opacity:.55}50%{transform:translateY(2px);opacity:.95}}
+@container ticket (max-width:760px){.page-head:has(.calendar-selectors-v161){flex-direction:column;gap:18px}.calendar-selectors-v161{width:100%}}
+@media(prefers-reduced-motion:reduce){.calendar-divider-v161{animation:none}}
+.receipt-day-v159 header,.receipt-row-v159{display:grid;grid-template-columns:minmax(0,1fr) 52px 106px;align-items:center;gap:6px}
+.receipt-day-v159 header{margin:16px 0 8px}.receipt-day-v159 h3{font-size:.87rem;margin:0}.receipt-day-v159 header>span{text-align:center;font-size:.7rem;color:#7447c7;font-weight:700}.receipt-day-v159 header>small{justify-self:end;font-size:.62rem}
+.receipt-row-v159{min-height:58px;border-bottom:1px solid #746a9610}.receipt-row-v159>span{display:flex;align-items:center;gap:10px;font-size:.85rem}.receipt-row-v159>b{text-align:right;font-size:.85rem;font-variant-numeric:tabular-nums}
+.receipt-preview-v159{display:grid;place-items:center;justify-self:center;width:44px;height:44px;border:1px solid white;border-radius:14px;background:#ede7f9;color:#7447c7;cursor:pointer}.receipt-preview-v159:disabled{opacity:.3;cursor:default}.receipt-preview-v159:focus-visible{outline:2px solid #7447c7;outline-offset:2px}
+@container ticket (max-width:360px){.receipt-day-v159 header,.receipt-row-v159{grid-template-columns:minmax(0,1fr) 44px 89px;gap:4px}.receipt-day-v159 h3{font-size:.76rem}.receipt-day-v159 header>small{font-size:.55rem;padding:0 5px}}

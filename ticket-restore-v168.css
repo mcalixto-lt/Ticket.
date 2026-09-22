@@ -1,0 +1,12 @@
+.ticket-restore-dialog{width:min(430px,calc(100vw - 28px));padding:22px 20px 20px;overflow:hidden}
+.ticket-restore-brand{display:flex;align-items:center;padding-bottom:17px;margin-bottom:18px;border-bottom:1px solid rgba(104,84,145,.11)}
+.ticket-restore-brand .brand-mark{width:35px;height:35px;border-radius:12px}.ticket-restore-brand .brand-mark svg{width:25px;height:25px}.ticket-restore-brand .brand-word{font-size:1.24rem}
+.ticket-restore-heading h3{margin:6px 0 6px;font-size:1.3rem;letter-spacing:-.025em}.ticket-restore-heading p{margin:0;color:#687286;font-size:.78rem;line-height:1.5}
+.ticket-restore-kicker{font-size:.64rem;font-weight:900;letter-spacing:.14em;color:#7447cf}
+.ticket-backup-dialog .ticket-restore-options{width:calc(100% - 18px);margin:18px auto;gap:11px}
+.ticket-backup-dialog .ticket-restore-options button{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr) 20px;align-items:center;gap:13px;min-height:82px;padding:13px 14px;border-color:rgba(103,78,151,.11);background:rgba(255,255,255,.68);box-shadow:0 10px 24px rgba(47,39,68,.055);transition:transform .18s ease,box-shadow .18s ease}
+.ticket-backup-dialog .ticket-restore-options button:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(47,39,68,.09)}
+.ticket-restore-options button>span:nth-child(2){min-width:0}.ticket-restore-options strong{display:block;color:#29344a;font-size:.88rem}.ticket-restore-options small{color:#687286;line-height:1.35}.ticket-restore-options button>i{display:grid;place-items:center;color:#9a8bad;font-style:normal}
+.ticket-restore-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:15px;background:rgba(255,255,255,.9);box-shadow:0 7px 18px rgba(52,45,72,.08);border:1px solid rgba(255,255,255,.95)}.ticket-restore-icon svg{width:30px;height:30px}.ticket-restore-icon.device{color:#6f46d9;background:linear-gradient(145deg,#f3eeff,#fff)}
+.ticket-restore-note{margin:4px 9px 16px;padding:12px 14px;border-radius:15px;background:#fff2dc;color:#765020;font-size:.7rem;line-height:1.5}.ticket-restore-cancel{width:calc(100% - 18px);margin:0 9px;min-height:48px}
+@container ticket (max-width:370px){.ticket-restore-dialog{padding-inline:14px}.ticket-backup-dialog .ticket-restore-options{width:100%}.ticket-backup-dialog .ticket-restore-options button{grid-template-columns:44px minmax(0,1fr) 16px;padding-inline:11px}.ticket-restore-icon{width:42px;height:42px}.ticket-restore-cancel{width:100%;margin-inline:0}}

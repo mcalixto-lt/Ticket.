@@ -1,0 +1,32 @@
+{
+  "id": "/",
+  "name": "Ticket.",
+  "short_name": "Ticket.",
+  "description": "Controle pessoal de jornada, registros e banco de horas.",
+  "start_url": "/?v=174",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef1f7",
+  "theme_color": "#eef1f7",
+  "icons": [
+    {
+      "src": "/public/favicon.png",
+      "sizes": "154x157",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/public/app-icon-v174.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/public/app-icon-v174.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

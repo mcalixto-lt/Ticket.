@@ -1,0 +1,44 @@
+/* Ticket. 1.0.30 — campos compactos e jornada dentro de Recursos do Ticket. */
+#balanceForm > .two-col,
+#closingForm > .two-col{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:10px;
+  align-items:end;
+}
+#balanceForm > .two-col .field,
+#closingForm > .two-col .field{
+  min-width:0;
+}
+#balanceForm > .two-col input,
+#closingForm > .two-col select{
+  width:100%;
+  min-width:0;
+}
+.v130-resources-card .v130-schedule-inside{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid rgba(100,109,132,.12);
+}
+.v130-resources-card .v130-schedule-inside > .schedule-rich-card{
+  margin:0;
+  padding:0;
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+.v130-resources-card .v130-schedule-inside .settings-card-head{
+  margin-bottom:14px;
+}
+@container ticket (max-width:760px){
+  #balanceForm > .two-col,
+  #closingForm > .two-col{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:9px;
+  }
+  .v130-resources-card .v130-schedule-inside{
+    margin-top:14px;
+    padding-top:14px;
+  }
+}

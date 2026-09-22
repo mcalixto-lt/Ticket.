@@ -1,0 +1,37 @@
+/* Ticket. 1.0.16 — captura única e hierarquia tipográfica unificada */
+
+/* Os dois boxes usam exatamente a mesma hierarquia do cabeçalho da captura principal. */
+.v116-environment-card .v105-capture-title{margin:0 0 14px!important;align-items:flex-start!important}
+.v116-environment-card .v105-capture-title h3{margin:0 0 6px!important;letter-spacing:-.04em!important}
+.v116-environment-card .v105-capture-title p{margin:0!important;font-size:unset!important;line-height:1.55!important;color:var(--muted)!important}
+
+.v116-destination-block{margin-top:14px;padding-top:13px;border-top:1px solid rgba(109,120,145,.11)}
+.v116-destination-block>.v105-form-label{display:block;margin-bottom:8px}
+.v116-destination-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.v116-destination{min-height:72px;padding:10px;border:1px solid rgba(255,255,255,.82);border-radius:16px;background:rgba(255,255,255,.38);display:grid;grid-template-columns:36px 1fr;align-items:center;gap:9px;text-align:left;color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.86);transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease}
+.v116-destination:active{transform:scale(.985)}
+.v116-destination.active.point{border-color:rgba(108,67,190,.28);background:rgba(111,70,196,.07);box-shadow:0 7px 18px rgba(91,62,158,.08),inset 0 1px 0 rgba(255,255,255,.9)}
+.v116-destination.active.environment{border-color:rgba(35,146,203,.27);background:rgba(35,146,203,.07);box-shadow:0 7px 18px rgba(36,133,184,.08),inset 0 1px 0 rgba(255,255,255,.9)}
+.v116-destination-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.88)}
+.v116-destination-icon.point{color:#7145c8}.v116-destination-icon.environment{color:#168ebf}
+.v116-destination strong,.v116-destination small{display:block}.v116-destination strong{font-size:.75rem}.v116-destination small{margin-top:3px;color:var(--muted);font-size:.62rem;line-height:1.35}
+
+.v116-environment-empty{min-height:76px;padding:11px 12px;border-radius:16px;background:rgba(255,255,255,.31);border:1px dashed rgba(109,82,170,.16);display:flex;align-items:center;gap:10px;color:#7a8497}
+.v116-environment-empty.ready{border-style:solid;background:rgba(255,255,255,.4)}
+.v116-environment-empty>span{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.58);color:#6f48c1;flex:0 0 38px}
+.v116-environment-empty strong,.v116-environment-empty small{display:block}.v116-environment-empty strong{color:var(--ink);font-size:.76rem}.v116-environment-empty small{margin-top:3px;color:var(--muted);font-size:.65rem;line-height:1.4}
+.v116-environment-preview{margin-top:2px}
+.v116-environment-note{margin-top:12px}
+.v116-environment-actions{display:flex;align-items:stretch;gap:9px;margin-top:12px}
+.v116-environment-actions .v116-register-environment{margin-top:0!important;flex:1 1 0;min-width:0;min-height:50px}
+.v116-cancel-environment{flex:1 1 0;min-width:0;min-height:50px;padding:10px 15px;border:1px solid rgba(205,72,86,.26);border-radius:16px;background:rgba(214,72,88,.13);color:#a83b49;box-shadow:inset 0 1px 0 rgba(255,255,255,.72),0 6px 16px rgba(151,52,67,.08);font-weight:800;cursor:pointer;transition:transform .16s ease,background .16s ease,border-color .16s ease,box-shadow .16s ease}
+.v116-cancel-environment:hover{background:rgba(214,72,88,.19);border-color:rgba(205,72,86,.38);color:#963240;box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 8px 18px rgba(151,52,67,.11)}
+.v116-cancel-environment:active{transform:scale(.985)}
+
+@container ticket (max-width:760px){
+  .v116-destination-grid{grid-template-columns:1fr}
+  .v116-destination{min-height:64px}
+  .v116-environment-card .v105-capture-title{margin-bottom:12px!important}
+  .v116-environment-actions{gap:8px}
+  .v116-environment-actions .v116-register-environment,.v116-cancel-environment{min-height:48px;padding-inline:12px}
+}

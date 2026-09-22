@@ -1,0 +1,111 @@
+/* Ticket. — ajuste de apresentação da tela de acesso no mobile */
+@container ticket (max-width: 760px) {
+  .auth-page {
+    display: block;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .auth-card {
+    display: block;
+    min-height: 100vh;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    background: rgba(255, 255, 255, .44);
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(34px) saturate(150%);
+    backdrop-filter: blur(34px) saturate(150%);
+  }
+
+  .auth-hero {
+    display: flex;
+    min-height: auto;
+    padding: 28px 24px 26px;
+    background: linear-gradient(155deg, rgba(255,255,255,.42), rgba(232,235,249,.28));
+    border-bottom: 1px solid rgba(255,255,255,.72);
+  }
+
+  .auth-hero .brand {
+    display: flex;
+  }
+
+  .auth-hero h1 {
+    margin: 38px 0 18px;
+    font-size: clamp(2.8rem, 13vw, 3.9rem);
+    line-height: .92;
+    letter-spacing: -.065em;
+  }
+
+  .auth-hero p {
+    margin: 0;
+    color: var(--muted);
+    font-size: .94rem;
+    line-height: 1.6;
+  }
+
+  .hero-flow {
+    margin-top: 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .hero-flow > div {
+    min-width: 0;
+    min-height: 82px;
+    border-radius: 18px;
+    gap: 7px;
+    background: rgba(255,255,255,.40);
+    border: 1px solid rgba(255,255,255,.82);
+    box-shadow: 0 8px 22px rgba(67,73,98,.06), inset 0 1px 0 rgba(255,255,255,.9);
+  }
+
+  .hero-flow > div small {
+    font-size: .68rem;
+    white-space: nowrap;
+  }
+
+  .auth-form-wrap {
+    min-height: auto;
+    padding: 30px 24px 44px;
+    background: rgba(255,255,255,.22);
+  }
+
+  .auth-form-wrap > .brand {
+    display: none;
+  }
+
+  .auth-tabs {
+    margin: 0 0 26px;
+  }
+}
+
+@container ticket (max-width: 390px) {
+  .auth-hero {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .auth-hero h1 {
+    margin-top: 32px;
+    font-size: 2.75rem;
+  }
+
+  .auth-form-wrap {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .hero-flow {
+    gap: 6px;
+  }
+
+  .hero-flow > div {
+    min-height: 78px;
+    border-radius: 16px;
+  }
+
+  .hero-flow > div small {
+    font-size: .62rem;
+  }
+}

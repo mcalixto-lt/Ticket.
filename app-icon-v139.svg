@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs><linearGradient id="bg" x1="12" y1="8" x2="118" y2="124" gradientUnits="userSpaceOnUse"><stop stop-color="#eeeaff"/><stop offset=".5" stop-color="#b9a5ef"/><stop offset="1" stop-color="#5b329f"/></linearGradient><linearGradient id="glass" x1="24" y1="20" x2="103" y2="109" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity=".72"/><stop offset="1" stop-color="#fff" stop-opacity=".16"/></linearGradient><linearGradient id="print" x1="34" y1="28" x2="91" y2="97" gradientUnits="userSpaceOnUse"><stop stop-color="#9d7bff"/><stop offset="1" stop-color="#4a208d"/></linearGradient></defs>
+  <rect width="128" height="128" rx="30" fill="url(#bg)"/>
+  <rect x="12" y="12" width="104" height="104" rx="27" fill="url(#glass)" stroke="#fff" stroke-opacity=".82" stroke-width="2"/>
+  <g fill="none" stroke="url(#print)" stroke-width="5" stroke-linecap="round"><path d="M29 65V51a35 35 0 0 1 70 0v14"/><path d="M40 69V51a24 24 0 0 1 48 0v19c0 14-4 26-11 36"/><path d="M52 71V51a12 12 0 0 1 24 0v20c0 11-3 20-8 29"/><path d="M31 78c2 11 7 21 15 29"/></g>
+  <circle cx="95" cy="95" r="21" fill="#18aa72" stroke="#fff" stroke-width="5"/><path d="m86 95 6 6 13-15" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

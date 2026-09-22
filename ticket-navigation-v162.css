@@ -1,0 +1,5 @@
+.ticket-page-back{display:inline-flex;align-items:center;gap:6px;margin-bottom:16px}
+.ticket-registration-avatar{text-align:center;padding:12px 0 24px}
+.ticket-registration-avatar svg{width:86px;height:86px}
+.ticket-registration-avatar h3{margin:12px 0 0}
+.ticket-registration .identity-list dd{overflow-wrap:anywhere}

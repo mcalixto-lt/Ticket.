@@ -1,0 +1,17 @@
+{
+  "name": "ticket-app",
+  "version": "1.0.75",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.mjs",
+    "test": "node tests/backup.cjs && node tests/bank-days-off.cjs && node tests/daymarks.cjs && node tests/storage-folder.cjs && node tests/production-check.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@google/genai": "2.14.0",
+    "express": "5.1.0"
+  }
+}
