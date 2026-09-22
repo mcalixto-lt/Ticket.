@@ -7,8 +7,9 @@ assert.match(c.captureView(),/data-daymark="folga"/);assert.match(c.captureView(
 assert.equal(await c.registerDayMark('folga'),true);assert.equal(saved.bankDaysOff[0].minutes,480);assert.equal(c.ticketDayRecords()[0].dayKind,'folga');assert.equal(nav,'dashboard');assert.equal(await c.registerDayMark('feriado'),false);
 c.state.balance={minutes:1200,bankDaysOff:[]};assert.equal(await c.registerDayMark('feriado'),true);assert.equal(c.state.balance.minutes,1200);assert.equal(c.ticketDayRecords()[0].dayKind,'feriado');assert.ok(c.bankDayQuote('2026-09-17').error);
 c.state.balance=JSON.parse(JSON.stringify(saved));assert.equal(c.ticketDayRecords()[0].dayKind,'feriado');
-let b={dataset:{daymarkCancel:saved.dayMarks[0].id,kind:'feriado'}};await listener({target:{closest:s=>s==='[data-daymark-cancel]'?b:null}});assert.equal(c.ticketDayRecords().length,0);
+// "Desfazer marcação" foi removido: a marcação persiste (sem botão de cancelar)
+let b={dataset:{daymarkCancel:saved.dayMarks[0].id,kind:'feriado'}};await listener({target:{closest:s=>s==='[data-daymark-cancel]'?b:null}});assert.equal(c.ticketDayRecords().length,1);
 c.state.records=[{date:'2026-09-17',punches:[{}]}];assert.equal(await c.registerDayMark('feriado'),false);
-c.state.records=[];fail=true;assert.equal(await c.registerDayMark('feriado'),false);assert.equal(c.ticketDayRecords().length,0);
-console.log('PASS: buttons, folga debit, holiday without debit, conflicts, records, reload, undo, storage failure');
+c.state.records=[];fail=true;assert.equal(await c.registerDayMark('feriado'),false);assert.equal(c.ticketDayRecords().length,1);
+console.log('PASS: buttons, folga debit, holiday without debit, conflicts, records, reload, no-undo, storage failure');
 })().catch(e=>{console.error(e);process.exit(1)});

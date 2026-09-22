@@ -10,7 +10,7 @@
   ];
 
   const CAMERA_WIDTH=636;
-  const CAMERA_HEIGHT=500;
+  const CAMERA_HEIGHT=520;
   let checking=false;
 
   function escVersion(value=''){
@@ -44,7 +44,7 @@
 
     /*
       Não usamos a proporção da câmera para dimensionar o container.
-      O container agora tem exatamente 636 x 500 px e fica centralizado.
+      O container agora tem exatamente 636 x 520 px e fica centralizado.
       Isso evita que scripts anteriores alterem a posição ou a altura.
     */
     stage.style.width=`min(${CAMERA_WIDTH}px, 100%)`;

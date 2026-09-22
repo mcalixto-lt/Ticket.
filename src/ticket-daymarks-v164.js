@@ -16,7 +16,7 @@ const dayRecordCardBefore=recordCard;
 recordCard=function(r){
  if(!r.dayKind)return dayRecordCardBefore(r);
  const name=r.dayKind==='folga'?'Folga':'Feriado';
- return `<article class="panel daymark-record"><span class="daymark-symbol ${r.dayKind}">${dayMarkIcon(r.dayKind)}</span><div><small>${formatDateBr(r.date)}</small><h3>${name}</h3><p>${r.dayKind==='folga'?`${formatDuration(r.minutes)} descontadas do banco de horas`:'Dia de descanso · sem desconto no banco'}</p><button type="button" class="secondary" data-daymark-cancel="${esc(r.id)}" data-kind="${r.dayKind}">Desfazer marcação</button></div></article>`;
+ return `<article class="panel daymark-record"><span class="daymark-symbol ${r.dayKind}">${dayMarkIcon(r.dayKind)}</span><div><small>${formatDateBr(r.date)}</small><h3>${name}</h3><p>${r.dayKind==='folga'?`${formatDuration(r.minutes)} descontadas do banco de horas`:'Dia de descanso · sem desconto no banco'}</p></div></article>`;
 };
 let dayMarkSaving=false;
 async function registerDayMark(kind){
@@ -44,18 +44,7 @@ async function registerDayMark(kind){
 }
 document.addEventListener('click',async e=>{
  const add=e.target.closest?.('[data-daymark]');
- if(add){add.disabled=true;try{await registerDayMark(add.dataset.daymark);}finally{add.disabled=false;}return;}
- const cancel=e.target.closest?.('[data-daymark-cancel]');
- if(!cancel||dayMarkSaving||bankSaving)return;
- dayMarkSaving=true;bankSaving=true;cancel.disabled=true;
- try{
-  const key=cancel.dataset.kind==='folga'?'bankDaysOff':'dayMarks';
-  const cpf=state.profile.cpf;
-  const next={...state.balance,[key]:(state.balance[key]||[]).map(x=>x.id===cancel.dataset.daymarkCancel?{...x,cancelledAt:new Date().toISOString()}:x)};
-  await saveSetting(cpf,'balance',next);
-  if(state.profile?.cpf===cpf){state.balance=next;renderView();toast('Marcação desfeita.');}
- }catch(error){toast('Não foi possível desfazer.');cancel.disabled=false;}
- finally{dayMarkSaving=false;bankSaving=false;}
+ if(add){add.disabled=true;try{await registerDayMark(add.dataset.daymark);}finally{add.disabled=false;}}
 });
 const daySubmitBefore=submitCapture;
 submitCapture=async function(e){
