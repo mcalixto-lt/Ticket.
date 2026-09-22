@@ -1,6 +1,10 @@
 .ticket-backup-actions{display:flex;align-items:center;gap:14px;justify-content:center;margin:20px 0}.ticket-backup-actions button{flex:1;display:flex;gap:8px;align-items:center;justify-content:center;min-height:66px}.ticket-backup-divider{color:#9a7bd8;font-size:32px;animation:backupDivider 3s ease-in-out infinite}
 .ticket-storage-options{display:grid;gap:14px;margin:20px 0}.ticket-storage-options button{display:flex;align-items:center;gap:16px;text-align:left;padding:20px}.ticket-storage-options small{display:block;font-size:12px;font-weight:400;margin-top:6px}.ticket-backup-warning{padding:14px;border-radius:14px;background:#fff2dc;color:#765020;font-size:13px;line-height:1.6}
-.ticket-backup-dialog{width:min(430px,90vw);box-sizing:border-box;border:1px solid white;border-radius:26px;padding:24px;background:#f7f5fc;color:#29344a}.ticket-backup-dialog::backdrop{background:#21153777;backdrop-filter:blur(6px)}.ticket-login-restore{text-align:center;padding:0 16px 24px}
+.ticket-backup-dialog{width:min(430px,90vw);box-sizing:border-box;border:1px solid white;border-radius:26px;padding:24px;background:#f7f5fc;color:#29344a}.ticket-backup-dialog::backdrop{background:#21153777;backdrop-filter:blur(6px)}
 .ticket-backup-dialog .ticket-storage-options{width:calc(100% - 20px);margin:18px auto}.ticket-backup-dialog .ticket-storage-options button{width:100%;box-sizing:border-box;border-radius:20px;padding:16px 18px}.ticket-storage-options em{display:block;margin-top:4px;color:#7447cf;font-size:11px;font-style:normal}
 @keyframes backupDivider{50%{transform:translateY(-3px);opacity:.5}}@media(prefers-reduced-motion:reduce){.ticket-backup-divider{animation:none}}
 .ticket-settings-section{border:1px solid white;border-radius:22px;background:rgba(255,255,255,.5);overflow:hidden}.ticket-settings-section>summary{padding:22px;color:#7447cf;font-weight:700;cursor:pointer}.ticket-settings-section[open]>summary{border-bottom:1px solid #ece6f3}.ticket-settings-section>.settings-section-card{margin:0;border:0;box-shadow:none}
+
+/* v1.0.76: botão Restaurar informações em lilas */
+.ticket-login-restore{position:fixed;left:0;right:0;bottom:20px;text-align:center;pointer-events:none;z-index:60}
+.ticket-login-restore .secondary{border:0;background:transparent;box-shadow:none;padding:6px 12px;pointer-events:auto;color:var(--ink,#1a1a2e);font-weight:700}

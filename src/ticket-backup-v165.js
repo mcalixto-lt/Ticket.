@@ -147,7 +147,7 @@ renderView=function(){
   return ticketRenderBefore165();
 };
 const ticketAuthBefore165=authTemplate;
-authTemplate=function(...args){return ticketAuthBefore165(...args)+`<div class="ticket-login-restore"><button class="secondary" data-ticket-choose="restore">Restaurar informações</button></div>`;};
+authTemplate=function(...args){return ticketAuthBefore165(...args)+`<div class="ticket-login-restore"><button class="secondary" data-ticket-choose="restore">Restaurar informa\u00e7\u00f5es</button></div>`;};
 const ticketSettingsBefore165=settingsView;
 settingsView=function(){
   const template=document.createElement('template');template.innerHTML=ticketSettingsBefore165();

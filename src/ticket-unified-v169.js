@@ -11,7 +11,7 @@ const ticketSettingsItems169=[
   ['closing','Período de fechamento','Organize o ciclo mensal','calendar','#2e79d9'],
   ['calendar','Calendário','Consulte suas jornadas por data','calendar','#ef8835'],
   ['storage','Armazenamento','Fotos, comprovantes e restauração','cloud','#169fd1'],
-  ['device','Aplicativo','Instalação e atualizações','device','#e25c82']
+  ['device','Aplicativo','Instalação e Redefinir','device','#e25c82']
 ];
 settingsView=function(){
   if(ticketSettingsSection169){

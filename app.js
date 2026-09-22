@@ -353,6 +353,10 @@ function exportData(){const payload={version:1,exportedAt:new Date().toISOString
 async function boot({afterLogin=false}={}){
   await (window.__ticketSplashDone||Promise.resolve());
   if(!afterLogin){
+    // Atualizar/reabrir N\u00c3O desloga: preserva a sess\u00e3o ativa.
+    // O logout s\u00f3 ocorre ao clicar em "Sair" ou ap\u00f3s 24h sem intera\u00e7\u00e3o
+    // (ticket-idle-v174 remove a sess\u00e3o antes do boot quando expirou).
+    if(await loadState()){renderShell();return;}
     clearSession();state.profile=null;
     renderAuth((await listProfiles()).length?'login':'register');return;
   }

@@ -1,6 +1,6 @@
 {
   "name": "ticket-app",
-  "version": "1.0.75",
+  "version": "1.0.77",
   "private": true,
   "type": "module",
   "scripts": {
