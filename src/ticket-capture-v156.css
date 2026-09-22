@@ -1,0 +1,28 @@
+/* Ticket. 1.0.58 — confirmação do comprovante */
+.receipt-success-v158{position:fixed;inset:0;z-index:10001;display:grid;place-items:center;padding:24px;background:rgba(238,242,249,.94);backdrop-filter:blur(24px)}
+.receipt-success-v158>div{text-align:center;padding:36px 22px;border:1px solid white;border-radius:30px;background:rgba(255,255,255,.65);box-shadow:0 20px 60px #43277718}
+.receipt-success-v158 span{display:grid;place-items:center;width:76px;height:76px;margin:0 auto 22px;border-radius:50%;background:#12a76d;color:white;font-size:38px}
+.receipt-success-v158 h2{font-size:1.3rem;color:#253044;margin:0}
+.v156-camera-toolbar{display:flex!important;justify-content:center!important;padding:13px 0 5px!important}
+.v156-capture-action{width:min(240px,100%)!important;height:58px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;padding:0 22px!important;border:1px solid rgba(255,255,255,.9)!important;border-radius:19px!important;background:linear-gradient(145deg,#7246d1,#51228f)!important;box-shadow:0 13px 28px rgba(75,35,137,.24),inset 0 1px 0 rgba(255,255,255,.22)!important;color:#fff!important;font-size:.9rem!important;font-weight:900!important;letter-spacing:.01em!important;transition:transform .22s ease,box-shadow .22s ease,background .22s ease!important}
+.v156-capture-action:hover,.v156-capture-action:focus-visible{transform:translateY(-2px);box-shadow:0 16px 34px rgba(75,35,137,.29),inset 0 1px 0 rgba(255,255,255,.24)!important}
+.v156-capture-action.armed{width:min(240px,100%)!important;height:58px!important;border:1px solid rgba(255,255,255,.9)!important;border-radius:19px!important;background:linear-gradient(145deg,#6840c4,#431b7b)!important;box-shadow:0 14px 31px rgba(67,27,123,.3),0 0 0 5px rgba(112,70,204,.08)!important}
+.v156-capture-action-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+.v156-capture-action.armed .v156-capture-action-icon{background:rgba(255,255,255,.2);animation:v156CapturePulse 1.8s ease-in-out infinite}
+.v155-punch-icon{animation:v156IconFloat 4s ease-in-out infinite}.v155-punch-icon .home-premium-svg-v152{animation:v156IconTilt 4s ease-in-out infinite}
+.v116-main-capture-card>.v105-capture-title .v105-camera-icon{animation:v156IconFloat 4.3s ease-in-out .35s infinite}.v116-main-capture-card>.v105-capture-title .v105-camera-icon .icon{animation:v156IconTilt 4.3s ease-in-out .35s infinite}
+.v116-main-capture-card .v105-camera-empty>.icon{animation:v156CameraBreathe 3.2s ease-in-out infinite}
+.v116-environment-card .v105-camera-icon{animation:v156IconFloat 4.6s ease-in-out .7s infinite}.v116-destination-icon{animation:v156IconFloat 4.2s ease-in-out infinite}.v116-destination:nth-child(2) .v116-destination-icon{animation-delay:.55s}
+@keyframes v156IconFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-4px,0)}}
+@keyframes v156IconTilt{0%,100%{transform:rotate(0)}50%{transform:rotate(3deg)}}
+@keyframes v156CameraBreathe{0%,100%{transform:scale(1);opacity:.76}50%{transform:scale(1.07);opacity:1}}
+@keyframes v156CapturePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.v157-capture-control{display:grid;justify-items:center;gap:10px;width:100%}
+.v157-capture-control .v156-capture-action,.v157-capture-control .v156-capture-action.armed{width:76px!important;min-width:76px!important;max-width:76px!important;height:76px!important;flex:0 0 76px!important;border-radius:50%!important;padding:0!important;display:grid!important;place-items:center!important;gap:0!important}
+.v157-capture-control .v156-capture-action-icon{width:54px;height:54px;border:1px solid rgba(255,255,255,.4);border-radius:50%;background:transparent!important;box-shadow:none;animation:none!important}
+.v157-capture-label{font-size:.72rem;color:var(--muted);text-align:center}
+.v116-capture-page .v105-camera-icon,.v116-capture-page .v116-destination-icon,.v116-capture-page .v155-punch-icon{display:grid!important;place-items:center!important;flex-shrink:0;animation:none!important}
+.v116-capture-page .v105-camera-icon svg,.v116-capture-page .v116-destination-icon svg,.v116-capture-page .v155-punch-icon svg{display:block;margin:0;transform-origin:center;animation:v156IconFloat 4s ease-in-out infinite!important}
+@media(prefers-reduced-motion:reduce){.v116-capture-page .v105-camera-icon svg,.v116-capture-page .v116-destination-icon svg,.v116-capture-page .v155-punch-icon svg{animation:none!important}}
+@container ticket (max-width:760px){.v156-capture-action{width:100%!important;max-width:250px!important}.v156-camera-toolbar{padding-top:11px!important}}
+@media(prefers-reduced-motion:reduce){.v155-punch-icon,.v155-punch-icon .home-premium-svg-v152,.v116-main-capture-card>.v105-capture-title .v105-camera-icon,.v116-main-capture-card>.v105-capture-title .v105-camera-icon .icon,.v116-main-capture-card .v105-camera-empty>.icon,.v116-environment-card .v105-camera-icon,.v116-destination-icon,.v156-capture-action.armed .v156-capture-action-icon{animation:none!important}}

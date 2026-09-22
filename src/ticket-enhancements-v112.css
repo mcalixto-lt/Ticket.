@@ -1,0 +1,63 @@
+/* Ticket. 1.0.12 — splash nítido, calendário refinado e animações persistentes */
+
+/* Splash interno: vetor nítido e exatamente dois giros antes de revelar o app. */
+.ticket-boot-splash{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#eef1f7;opacity:1;visibility:visible;transition:opacity .22s ease,visibility .22s ease}
+.ticket-boot-splash.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
+.ticket-boot-tile{width:134px;height:134px;border-radius:36px;display:grid;place-items:center;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.96);box-shadow:0 18px 50px rgba(74,62,120,.11),inset 0 1px 0 rgba(255,255,255,.98);-webkit-backdrop-filter:blur(22px) saturate(150%);backdrop-filter:blur(22px) saturate(150%)}
+.ticket-boot-logo{width:96px;height:96px;display:block;overflow:visible;shape-rendering:geometricPrecision}
+.ticket-boot-spin{transform-box:view-box;transform-origin:64px 64px;will-change:transform}
+.ticket-boot-splash.run .ticket-boot-spin{animation:v112BootSpin 1.18s cubic-bezier(.42,0,.25,1) forwards}
+@keyframes v112BootSpin{0%{transform:rotate(0deg)}100%{transform:rotate(720deg)}}
+
+/* Calendário: seletor nativo invisível sobre um rótulo completo, sem borda preta. */
+.v112-calendar-head{align-items:center}
+.v112-calendar-selector{position:relative;width:210px;min-height:44px;display:flex;align-items:center;justify-content:center;padding:0 38px 0 14px;border-radius:14px;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.92);color:#30394c;font-weight:750;white-space:nowrap;overflow:hidden}
+.v112-calendar-selector::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-52%);color:#7b8496;font-size:.78rem;pointer-events:none}
+.v112-calendar-month-label{display:block;max-width:100%;overflow:hidden;text-overflow:clip;white-space:nowrap;font-size:.82rem;text-transform:none}
+.v112-calendar-selector input[type="month"]{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;opacity:0;cursor:pointer;border:0!important;outline:0!important;box-shadow:none!important;-webkit-appearance:none;appearance:none}
+.v112-calendar-selector:focus-within{outline:0!important;border-color:rgba(111,70,196,.22);box-shadow:0 0 0 3px rgba(111,70,196,.055),inset 0 1px 0 rgba(255,255,255,.92)}
+
+/* Fluxo da jornada: ícones em movimento contínuo e setas geometricamente centradas. */
+.v112-flow{align-items:start!important}
+.v112-flow .flow-step{position:relative}
+.v112-motion .v112-flow .flow-icon{animation:v112FlowMotion 2.85s ease-in-out infinite!important;animation-delay:var(--v112-flow-delay,0s)!important;animation-play-state:running!important;will-change:transform}
+.v112-flow .flow-link{align-self:start!important;display:block!important;position:relative!important;height:1px!important;margin:27.5px 0 0!important;background:rgba(126,139,162,.34)!important;border:0!important;overflow:visible!important;opacity:.82}
+.v112-flow .flow-link::after{content:''!important;position:absolute!important;left:auto!important;right:0!important;top:50%!important;width:5px!important;height:5px!important;border-top:1.6px solid #8792a7!important;border-right:1.6px solid #8792a7!important;transform:translateY(-50%) rotate(45deg)!important;transform-origin:center!important;line-height:normal!important}
+.v112-flow .flow-link.v112-next-link{background:#f39a3e!important;box-shadow:0 0 8px rgba(243,154,62,.42);animation:v112ArrowBlink 1.05s ease-in-out infinite!important;animation-play-state:running!important}
+.v112-flow .flow-link.v112-next-link::after{border-color:#f39a3e!important}
+@keyframes v112ArrowBlink{0%,100%{opacity:.34;filter:saturate(.9)}50%{opacity:1;filter:saturate(1.25)}}
+@keyframes v112FlowMotion{0%,100%{transform:translate3d(0,0,0) rotate(0deg)}25%{transform:translate3d(0,-2.3px,0) rotate(-1.1deg)}50%{transform:translate3d(1.2px,.8px,0) rotate(.9deg)}75%{transform:translate3d(-1.1px,-.8px,0) rotate(-.7deg)}}
+
+/* Cards de horas: ícones coloridos e animados, sem mudar a posição dos cards. */
+.dashboard-grid .stats .stat:nth-child(1) .stat-icon{color:#2e79ff;background:rgba(46,121,255,.09)}
+.dashboard-grid .stats .stat:nth-child(2) .stat-icon{color:#f28a32;background:rgba(242,138,50,.1)}
+.dashboard-grid .stats .stat:nth-child(3) .stat-icon{color:#13a86a;background:rgba(19,168,106,.09)}
+.dashboard-grid .stats .stat:nth-child(4) .stat-icon{color:#7046c8;background:rgba(112,70,200,.09)}
+.v112-motion .dashboard-grid .stats .stat-icon{animation:v112StatMotion 3.05s ease-in-out infinite!important;animation-play-state:running!important;will-change:transform}
+.v112-motion .dashboard-grid .stats .stat:nth-child(1) .stat-icon{animation-delay:0s!important}
+.v112-motion .dashboard-grid .stats .stat:nth-child(2) .stat-icon{animation-delay:.32s!important}
+.v112-motion .dashboard-grid .stats .stat:nth-child(3) .stat-icon{animation-delay:.64s!important}
+.v112-motion .dashboard-grid .stats .stat:nth-child(4) .stat-icon{animation-delay:.96s!important}
+@keyframes v112StatMotion{0%,100%{transform:translate3d(0,0,0) rotate(0deg)}30%{transform:translate3d(0,-2px,0) rotate(-2deg)}60%{transform:translate3d(1px,1px,0) rotate(1.5deg)}82%{transform:translate3d(-1px,0,0) rotate(-.7deg)}}
+
+@container ticket (max-width:760px){
+  .ticket-boot-tile{width:126px;height:126px;border-radius:34px}
+  .ticket-boot-logo{width:90px;height:90px}
+  .v112-calendar-head{display:grid;grid-template-columns:minmax(0,1fr) 164px;gap:10px;align-items:center}
+  .v112-calendar-selector{width:164px;min-width:164px;min-height:42px;padding-left:10px;padding-right:30px}
+  .v112-calendar-selector::after{right:10px}
+  .v112-calendar-month-label{font-size:.74rem}
+  .v112-flow .flow-link{margin-top:22.5px!important}
+}
+
+@container ticket (max-width:390px){
+  .v112-calendar-head{grid-template-columns:minmax(0,1fr) 154px;gap:8px}
+  .v112-calendar-selector{width:154px;min-width:154px;padding-left:8px;padding-right:26px}
+  .v112-calendar-selector::after{right:8px}
+  .v112-calendar-month-label{font-size:.71rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v112-motion .v112-flow .flow-icon,.v112-motion .dashboard-grid .stats .stat-icon{animation-duration:5.5s!important}
+  .v112-flow .flow-link.v112-next-link{animation-duration:1.5s!important}
+}

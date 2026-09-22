@@ -1,0 +1,49 @@
+/* Ticket. 1.0.73 — seta da jornada piscando inteira, popover de notificação e
+   painel de Backup Automático no Armazenamento. */
+
+/* 1) Seta da jornada: a ponta "›" pisca junto com a barra (seta inteira "→").
+   A barra pisca via keyframes homeJourneyArrowNext172/Done172 (opacity+translateX).
+   A ponta não pode usar esses keyframes porque quebrariam o rotate(45°);
+   usamos um keyframes próprio de opacity, com a mesma duração, para sincronizar. */
+.home-journey-link-v152.is-next::after{
+  border-top-color:#f3a12f!important;
+  border-right-color:#f3a12f!important;
+  animation:homeJourneyArrowTipNext173 1.2s ease-in-out infinite!important;
+}
+.home-journey-link-v152.is-done::after{
+  border-top-color:#20b778!important;
+  border-right-color:#20b778!important;
+  animation:homeJourneyArrowTipDone173 1.5s ease-in-out infinite!important;
+}
+@keyframes homeJourneyArrowTipNext173{0%,100%{opacity:.38}50%{opacity:1}}
+@keyframes homeJourneyArrowTipDone173{0%,100%{opacity:.64}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+  .home-journey-link-v152.is-next::after,.home-journey-link-v152.is-done::after{animation-duration:2.8s!important}
+}
+
+/* 2) Popover de notificação: texto leve sobre o sino; fecha em qualquer clique. */
+.ticket-notification-pop-v173{
+  position:fixed;z-index:9999;max-width:300px;padding:10px 14px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.85);background:rgba(255,255,255,.9);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  box-shadow:0 14px 38px rgba(57,66,95,.22);
+  color:#4d3a8f;font-size:.8rem;font-weight:700;line-height:1.35;
+  animation:ticketPopIn173 .18s ease-out;
+}
+.ticket-notification-pop-v173::after{
+  content:'';position:absolute;left:24px;bottom:-6px;width:10px;height:10px;
+  background:rgba(255,255,255,.9);border-right:1px solid rgba(255,255,255,.85);
+  border-bottom:1px solid rgba(255,255,255,.85);transform:rotate(45deg);
+}
+@keyframes ticketPopIn173{from{opacity:0;transform:translateY(4px) scale(.98)}to{opacity:1;transform:none}}
+
+/* 5/6) Painel de Backup Automático no Armazenamento.
+   Espaçamento igual ao padrão dos demais boxes: os cards de destino usam
+   gap 14px; o box "Recuperar informações" passa a ter 14px do "Backup Automático". */
+.autobackup-panel-v173 h3{margin:0 0 6px;font-size:1rem}
+.autobackup-panel-v173 p{margin:0 0 10px;color:#5b6478;font-size:.82rem;line-height:1.45}
+#autobackupStatus-v173{margin:0 0 10px;padding:8px 12px;border-radius:10px;background:rgba(116,71,207,.08);color:#5a3bbf;font-size:.8rem;font-weight:700;min-height:1.4em}
+#autobackupStatus-v173.is-ok{background:rgba(19,168,106,.1);color:#0f8a58}
+#autobackupStatus-v173.is-err{background:rgba(239,95,102,.12);color:#c93a44}
+.autobackup-actions-v173{display:flex;flex-wrap:wrap;gap:8px}
+.autobackup-panel-v173+.panel{margin-top:14px}

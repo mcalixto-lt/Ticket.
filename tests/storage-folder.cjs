@@ -1,0 +1,21 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+let permission='granted',failure=false,committed='',writes=0,aborts=0,revision=0,handleSaved,timer;
+const file={name:'Ticket-test.json',async createWritable(){let buffer;return {async write(b){buffer=await b.text();},async close(){if(failure)throw Error('disk full');committed=buffer;writes++;},async abort(){aborts++;}};}};
+const dir={name:'Minha pasta',async queryPermission(){return permission;},async getFileHandle(){return file;}};
+const c={console,Blob,crypto:require('node:crypto').webcrypto,state:{profile:null,view:'storage'},document:{querySelector:()=>null,addEventListener(){}},window:{showDirectoryPicker:async()=>dir},esc:s=>s,icon:()=>'',head:()=>'',renderShell(){},renderView(){},storageView(){return'';},ticketBackupBusy:false,todayIso:()=> '2026-09-17',toast(){},ticketCreateBackup:async()=>new Blob([String(revision)]),saveProfile:async()=>{},saveRecord:async()=>{revision++;},saveEvidence:async()=>{},saveSetting:async(cpf,key,value)=>{if(key==='internalStorageDestination')handleSaved=value;},getSetting:async()=>handleSaved,ticketCommitRestore:async()=>{},clearProfileData:async()=>{},setTimeout:f=>{timer=f;return 1},clearTimeout:()=>{timer=null}};
+vm.createContext(c);vm.runInContext(fs.readFileSync(path.join(__dirname,'../src/ticket-storage-v166.js'),'utf8'),c);
+(async()=>{
+ c.state.profile={cpf:'12345678909'};
+ await c.ticketSelectFolder();assert.equal(writes,1);assert.equal(handleSaved.dir,dir);
+ await c.saveRecord({profileCpf:'12345678909'});await c.ticketFlushFolder();assert.equal(committed,'1');
+ await c.saveRecord({profileCpf:'other'});assert.equal(writes,2);
+ await c.saveRecord({profileCpf:'12345678909'});permission='denied';await c.ticketFlushFolder();assert.equal(writes,2);
+ permission='granted';failure=true;await c.ticketFlushFolder();assert.equal(writes,2);assert.equal(aborts,1);assert.equal(committed,'1');
+ failure=false;await c.ticketFlushFolder();assert.equal(committed,String(revision));
+ const priorWrites=writes;c.window.showDirectoryPicker=async()=>{const e=Error('cancel');e.name='AbortError';throw e};await c.ticketSelectFolder();assert.equal(writes,priorWrites);
+ await c.ticketUseBrowser();assert.equal(handleSaved.mode,'browser');await c.saveRecord({profileCpf:'12345678909'});await c.ticketFlushFolder();assert.equal(writes,priorWrites);
+ c.window.showDirectoryPicker=async()=>dir;await c.ticketSelectFolder();const restoredWrites=writes;
+ await c.ticketCommitRestore({});await c.ticketFlushFolder();assert.equal(writes,restoredWrites);
+ const s=fs.readFileSync(path.join(__dirname,'../src/ticket-holidays-v132.js'),'utf8');assert.equal(s.includes('data-resource-view="backup"'),false);
+ console.log('PASS: initial file, automatic updates, account isolation, revoked permission, failed write preserves previous data, retry, cancellation, browser selection, restore detaches destination; mocked file APIs, device testing still required.');
+})().catch(e=>{console.error(e);process.exit(1)});

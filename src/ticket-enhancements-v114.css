@@ -1,0 +1,44 @@
+/* Ticket. 1.0.14 — clima mais realista, relógio e IA multicolor */
+
+.v114-weather-launcher{min-width:118px!important;padding:0 10px!important;gap:8px!important;justify-content:flex-start!important;background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(244,248,255,.46))!important;border-color:rgba(255,255,255,.94)!important;box-shadow:0 9px 24px rgba(52,66,101,.11),inset 0 1px 0 rgba(255,255,255,.98)!important}
+.v114-weather-glyph{width:30px!important;height:30px!important;border-radius:10px!important;background:rgba(255,255,255,.72)!important;border:1px solid rgba(255,255,255,.88);box-shadow:0 4px 12px rgba(50,73,112,.08),inset 0 1px 0 #fff!important;flex:0 0 30px}
+.v114-weather-glyph svg{display:block;width:23px;height:23px;filter:drop-shadow(0 2px 3px rgba(41,62,96,.12))}
+.v114-weather-values{display:flex;align-items:center;gap:6px;white-space:nowrap;line-height:1}
+.v114-weather-values strong{font-size:.72rem!important;color:#344056;font-weight:850}
+.v114-weather-values i{width:1px;height:15px;background:rgba(99,111,137,.2);display:block}
+.v114-weather-values time{font-size:.68rem;color:#68748a;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+
+/* Assistente IA: brilho suave e transição contínua de cores, sem deslocamento. */
+.v114-ai-prism{position:relative!important;overflow:hidden!important;border:1px solid rgba(255,255,255,.92)!important;background:rgba(255,255,255,.56)!important;color:#7448df!important;box-shadow:0 8px 20px rgba(86,63,174,.11),inset 0 1px 0 rgba(255,255,255,.98)!important;animation:v114AiSpectrum 7s linear infinite!important}
+.v114-ai-prism::after{content:'';position:absolute;inset:4px;border-radius:9px;background:currentColor;opacity:.035;pointer-events:none;animation:v114AiSoftBlink 2.2s ease-in-out infinite}
+.v114-ai-prism svg{position:relative;z-index:1;color:currentColor!important;filter:drop-shadow(0 2px 5px color-mix(in srgb,currentColor 34%,transparent));animation:v114AiIconGlow 2.2s ease-in-out infinite}
+@keyframes v114AiSpectrum{
+  0%{color:#7448df;box-shadow:0 8px 20px rgba(116,72,223,.13),inset 0 1px 0 rgba(255,255,255,.98)}
+  16%{color:#3b82f6;box-shadow:0 8px 20px rgba(59,130,246,.13),inset 0 1px 0 rgba(255,255,255,.98)}
+  32%{color:#06a6c9;box-shadow:0 8px 20px rgba(6,166,201,.13),inset 0 1px 0 rgba(255,255,255,.98)}
+  48%{color:#16a66b;box-shadow:0 8px 20px rgba(22,166,107,.13),inset 0 1px 0 rgba(255,255,255,.98)}
+  64%{color:#f09a32;box-shadow:0 8px 20px rgba(240,154,50,.14),inset 0 1px 0 rgba(255,255,255,.98)}
+  80%{color:#ef5f93;box-shadow:0 8px 20px rgba(239,95,147,.13),inset 0 1px 0 rgba(255,255,255,.98)}
+  100%{color:#7448df;box-shadow:0 8px 20px rgba(116,72,223,.13),inset 0 1px 0 rgba(255,255,255,.98)}
+}
+@keyframes v114AiSoftBlink{0%,100%{opacity:.025}50%{opacity:.09}}
+@keyframes v114AiIconGlow{0%,100%{opacity:.78;filter:drop-shadow(0 1px 3px rgba(81,58,160,.08))}50%{opacity:1;filter:drop-shadow(0 3px 7px rgba(81,58,160,.18))}}
+
+@container ticket (max-width:760px){
+  .mobile-brand .v114-weather-launcher{min-width:108px!important;height:36px!important;padding:0 7px!important;gap:6px!important}
+  .mobile-brand .v114-weather-glyph{width:28px!important;height:28px!important;flex-basis:28px}
+  .mobile-brand .v114-weather-glyph svg{width:21px;height:21px}
+  .mobile-brand .v114-weather-values{gap:5px}
+  .mobile-brand .v114-weather-values strong{font-size:.69rem!important}
+  .mobile-brand .v114-weather-values time{font-size:.64rem}
+}
+@container ticket (max-width:390px){
+  .mobile-brand .v114-weather-launcher{min-width:101px!important;padding-left:6px!important;padding-right:6px!important}
+  .mobile-brand .v114-weather-values strong{font-size:.66rem!important}
+  .mobile-brand .v114-weather-values time{font-size:.61rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v114-ai-prism{animation-duration:12s!important}
+  .v114-ai-prism::after,.v114-ai-prism svg{animation-duration:4s!important}
+}

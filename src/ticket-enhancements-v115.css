@@ -1,0 +1,43 @@
+/* Ticket. 1.0.15 — clima automático, IA multicolor e câmera de ambiente integrada */
+
+/* O clima é informativo: sem aparência de botão clicável. */
+.v114-weather-launcher[aria-disabled="true"]{cursor:default!important;pointer-events:auto!important}
+.v114-weather-launcher[aria-disabled="true"]:active{transform:none!important}
+
+/* IA estilo Google: várias cores simultâneas e pulsação suave. */
+.v115-ai-google{position:relative!important;isolation:isolate!important;overflow:hidden!important;background:rgba(255,255,255,.58)!important;border:1px solid transparent!important;background-clip:padding-box!important;box-shadow:0 8px 22px rgba(75,74,135,.12),inset 0 1px 0 rgba(255,255,255,.98)!important}
+.v115-ai-google::before{content:'';position:absolute;inset:-55%;z-index:0;background:conic-gradient(from 0deg,#4285f4,#34a853,#fbbc05,#ea4335,#8b5cf6,#4285f4);opacity:.17;animation:v115GoogleHalo 7.2s linear infinite;pointer-events:none}
+.v115-ai-google::after{content:'';position:absolute;inset:2px;z-index:1;border-radius:inherit;background:rgba(248,250,255,.88);box-shadow:inset 0 1px 0 rgba(255,255,255,.96);pointer-events:none;animation:v115GooglePulse 2.4s ease-in-out infinite}
+.v115-ai-google svg{position:relative!important;z-index:2!important;filter:drop-shadow(0 2px 4px rgba(50,70,120,.12))!important}
+.v115-ai-google svg path:nth-child(1){stroke:#4285f4!important;animation:v115PathOne 6.8s ease-in-out infinite}
+.v115-ai-google svg path:nth-child(2){stroke:#ea4335!important;animation:v115PathTwo 6.8s ease-in-out infinite}
+.v115-ai-google svg path:nth-child(3){stroke:#fbbc05!important;animation:v115PathThree 6.8s ease-in-out infinite}
+@keyframes v115GoogleHalo{to{transform:rotate(360deg)}}
+@keyframes v115GooglePulse{0%,100%{opacity:.92}50%{opacity:.72}}
+@keyframes v115PathOne{0%,100%{stroke:#4285f4}25%{stroke:#34a853}50%{stroke:#fbbc05}75%{stroke:#ea4335}}
+@keyframes v115PathTwo{0%,100%{stroke:#ea4335}25%{stroke:#4285f4}50%{stroke:#34a853}75%{stroke:#fbbc05}}
+@keyframes v115PathThree{0%,100%{stroke:#fbbc05}25%{stroke:#ea4335}50%{stroke:#4285f4}75%{stroke:#34a853}}
+
+/* Foto do ambiente com o mesmo padrão visual da captura principal. */
+.v115-environment-card{display:block!important}
+.v115-env-title{margin-bottom:14px}
+.v115-env-title h3{margin:3px 0 5px;font-size:1.05rem}
+.v115-env-title p{margin:0;color:var(--muted);font-size:.76rem;line-height:1.5}
+.v115-env-frame{min-height:260px!important;margin-top:6px}
+.v115-env-frame video,.v115-env-frame img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.v115-env-watermark-note{margin-top:8px;padding:7px 10px;border-radius:11px;background:rgba(56,150,213,.07);color:#5d6d83;font-size:.66rem;text-align:center}
+.v115-env-toolbar{justify-content:center!important;margin-top:12px}
+.v115-env-note{margin-top:13px}
+.v115-env-register{width:100%;min-height:50px;margin-top:12px;border:0;border-radius:16px;color:#fff;background:linear-gradient(180deg,#6430a9,#401676);box-shadow:0 11px 24px rgba(72,28,129,.22),inset 0 1px 0 rgba(255,255,255,.14);font-weight:850}
+.v115-env-register:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}
+.v115-env-register.registered{background:linear-gradient(180deg,#22b679,#11945f);box-shadow:0 10px 22px rgba(18,151,96,.18)}
+
+@container ticket (max-width:760px){
+  .v115-env-frame{min-height:240px!important}
+  .v115-env-title{align-items:flex-start}
+  .v115-env-register{min-height:48px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .v115-ai-google::before,.v115-ai-google::after,.v115-ai-google svg path{animation-duration:12s!important}
+}

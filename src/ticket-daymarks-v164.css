@@ -1,0 +1,6 @@
+.v156-camera-toolbar{display:flex!important;justify-content:space-evenly!important;align-items:flex-start!important;gap:8px!important}
+.daymark-action{display:flex;flex-direction:column;align-items:center;gap:12px;border:0;background:none;min-width:76px;padding:0;cursor:pointer;color:#7447cf}
+.daymark-action>span{width:76px;height:76px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.65);border:1px solid white;box-shadow:0 8px 20px #44376e12;backdrop-filter:blur(12px)}
+.daymark-action b{font-size:13px;font-weight:500;color:#778093}.daymark-action svg{animation:daymarkFloat 3.5s ease-in-out infinite}.daymark-action.feriado{color:#3c4352}.daymark-action.feriado svg{animation-delay:-1.5s}
+.daymark-record{display:flex;gap:16px;align-items:center}.daymark-record h3{margin:8px 0}.daymark-record p{font-size:13px;color:#778093}.daymark-symbol{color:#7447cf}.daymark-symbol.feriado{color:#3c4352}
+@keyframes daymarkFloat{50%{transform:translateY(-2px)}}@media(prefers-reduced-motion:reduce){.daymark-action svg{animation:none}}

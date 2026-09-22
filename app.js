@@ -261,7 +261,16 @@ function renderAuth(mode='login'){
   clearTimeout(authSuccessTimer);authSuccessTimer=0;stopCamera();app.innerHTML=authTemplate(mode);
   document.querySelectorAll('[data-auth]').forEach(b=>b.onclick=()=>renderAuth(b.dataset.auth));
   const cpfInput=document.querySelector('#cpfInput');
-  if(cpfInput)ticketProtectCpf(cpfInput);
+  if(cpfInput){
+    if(typeof ticketProtectCpf==='function')ticketProtectCpf(cpfInput);
+    else if(!cpfInput.dataset.p171wait){
+      // ticketProtectCpf mora no ticket-input-v171.js (defer). Se ainda não
+      // carregou, aplica assim que ficar disponível, evitando o crash.
+      cpfInput.dataset.p171wait='1';
+      const applyProtect=()=>{if(typeof ticketProtectCpf==='function')ticketProtectCpf(cpfInput);else setTimeout(applyProtect,120);};
+      applyProtect();
+    }
+  }
   document.querySelector('#authForm').onsubmit=handleAuth;
 }
 async function handleAuth(e){

@@ -1,0 +1,4 @@
+.bank-current{display:flex;flex-direction:column;gap:8px;background:rgba(116,71,207,.06);padding:20px;border-radius:20px;margin-bottom:20px}
+.bank-current strong{font-size:30px;color:#7447cf}.bank-initial{margin:20px 0}.bank-initial summary{color:#7447cf;cursor:pointer;padding:8px 0}
+#bankDayOffForm{display:grid;gap:16px}.bank-quote{padding:16px;background:rgba(116,71,207,.08);border-radius:16px;line-height:1.6}
+.bank-history>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:16px 0;border-top:1px solid #e7e3ed}.bank-history span{flex:1}.bank-day-off{background:#eee8f8!important;color:#7447cf}.bank-day-off small{display:block;font-size:9px}
