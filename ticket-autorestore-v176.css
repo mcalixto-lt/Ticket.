@@ -1,0 +1,17 @@
+/* Ticket. 1.0.76 — banner de restauração do Google Drive. */
+.ticket-restore-banner-v176{
+  margin:14px 0 0;padding:14px 16px;border-radius:16px;
+  border:1px solid rgba(46,121,217,.4);background:linear-gradient(160deg,rgba(46,121,217,.14),rgba(46,121,217,.05));
+  -webkit-backdrop-filter:blur(10px) saturate(150%);backdrop-filter:blur(10px) saturate(150%);
+  box-shadow:0 10px 26px rgba(30,64,150,.14);animation:ticketRestoreBannerIn176 .25s ease-out;
+}
+.ticket-restore-banner-inner-v176{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.ticket-restore-banner-inner-v176 span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ticket-restore-banner-inner-v176 strong{color:#1c4fa0;font-size:.92rem;font-weight:800}
+.ticket-restore-banner-inner-v176 small{color:#46507a;font-size:.78rem;line-height:1.35}
+.ticket-restore-banner-inner-v176 button{flex-shrink:0;padding:0 16px;min-height:44px;border-radius:14px}
+@keyframes ticketRestoreBannerIn176{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (max-width:420px){
+  .ticket-restore-banner-inner-v176{flex-direction:column;align-items:stretch}
+  .ticket-restore-banner-inner-v176 button{width:100%}
+}

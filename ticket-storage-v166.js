@@ -25,6 +25,10 @@ async function ticketWriteFolder(target,blob){
 async function ticketFlushFolder(){
   if(ticketFolderWriting||ticketFolderSelecting||ticketBackupBusy||!ticketFolder||!ticketFolderDirty)return;
   const target=ticketFolder;if(state.profile?.cpf!==target.cpf)return;
+  // Reconfere destino: se mudou para navegador, desliga a pasta silenciosamente
+  let liveDest=null;try{liveDest=await getSetting(target.cpf,'internalStorageDestination',null);}catch{}
+  if(!liveDest||liveDest.mode!=='folder'){ticketFolder=null;ticketFolderDirty=false;clearTimeout(ticketFolderTimer);return;}
+  const cpfLive=target.cpf;if((state.profile?.cpf||'')!==cpfLive)return;
   ticketFolderWriting=true;ticketFolderDirty=false;
   ticketFolderStatusUpdate('Salvando a cópia completa na pasta…');
   try{
@@ -34,14 +38,15 @@ async function ticketFlushFolder(){
     await ticketWriteFolder(target,blob);
     ticketFolderStatusUpdate(`Salvo em ${target.dir.name} às ${new Date().toLocaleTimeString('pt-BR')}.`);
   }catch(error){
-    ticketFolderDirty=true;ticketFolderStatusUpdate('Cópia externa pendente. Reconecte a pasta para tentar novamente.');
-    toast('Não foi possível atualizar a pasta. Os dados continuam no navegador.');
+    // Falhou: mantém dirty para retry, sem toast assustador.
+    ticketFolderDirty=true;
     return;
   }finally{ticketFolderWriting=false;}
-  if(ticketFolderDirty)ticketScheduleFolder(target.cpf);
 }
-function ticketScheduleFolder(cpf){
+async function ticketScheduleFolder(cpf){
   if(!ticketFolder||ticketFolder.cpf!==cpf)return;
+  let dest=null;try{dest=await getSetting(cpf,'internalStorageDestination',null);}catch{}
+  if(!dest||dest.mode!=='folder'){ticketFolder=null;ticketFolderDirty=false;clearTimeout(ticketFolderTimer);return;}
   ticketFolderDirty=true;clearTimeout(ticketFolderTimer);
   ticketFolderStatusUpdate('Alterações aguardando salvamento na pasta. Mantenha o Ticket aberto.');
   ticketFolderTimer=setTimeout(ticketFlushFolder,800);

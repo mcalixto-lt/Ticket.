@@ -17,6 +17,6 @@ html,body{margin:0;min-height:100%;overflow-x:clip}
 #app .v116-capture-page{display:grid;gap:16px}#app .v116-main-capture-card{padding:18px;border-radius:24px}
 #app .v116-main-capture-card .v105-capture-title p,#app .v116-environment-title p{font-size:12px;line-height:1.5;color:#798398}
 #app .v116-main-capture-card .v105-capture-title h3{font-size:18px}
-#app #cameraStage{height:304px!important;min-height:0!important;border-radius:24px;background:#242839!important;color:#d4d2e6}
+#app #cameraStage{height:450px!important;min-height:450px!important;max-height:450px!important;border-radius:24px;background:#242839!important;color:#d4d2e6}
 #app #cameraStage .corner{border-color:#8555e5}#app .v116-environment-empty{font-size:12px}
 .ticket-touch-splash{width:min(430px,100%);margin-inline:auto;box-sizing:border-box;padding:0}.ticket-touch-animation{width:100%;height:100dvh;border-radius:0;border:0}
