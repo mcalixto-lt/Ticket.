@@ -14,19 +14,20 @@ for(const [,ref] of sw.matchAll(/['"]\/(?!api)([^'"?]+)(?:\?[^'"]*)?['"]/g)){
   if(!ref||ref==='index.html')continue;
   assert(fs.existsSync(path.join(root,ref)),`Cache ausente: ${ref}`);
 }
-assert(html.includes('ticket-cloud-v167.js?v=171'));
+assert(html.includes('ticket-cloud-v167.js?v=186'));
 assert(!html.includes('?v=167'));
-assert(sw.includes("ticket-app-v178"));
+assert(sw.includes("ticket-app-v186"));
 assert(!sw.includes('?v=167'));
-assert.strictEqual(JSON.parse(read('version.json')).version,'1.0.78');
-assert.strictEqual(JSON.parse(read('public/version.json')).version,'1.0.78');
+assert.strictEqual(JSON.parse(read('version.json')).version,'1.0.86');
+assert.strictEqual(JSON.parse(read('public/version.json')).version,'1.0.86');
 const render=read('render.yaml');
 assert(render.includes('name: ticket-app'));
 assert(render.includes('buildCommand: npm ci'));
 assert(render.includes('startCommand: npm start'));
 const config=read('public/config.js');
-assert(config.includes("googleClientId:''"));
-assert(config.includes("microsoftClientId:''"));
+assert(config.includes('googleClientId'));
+assert(config.includes('.apps.googleusercontent.com'));
+assert(config.includes('microsoftClientId'));
 const server=read('server/index.mjs');
 assert(server.includes("app.use('/src'"));
 assert(server.includes("app.use('/public'"));

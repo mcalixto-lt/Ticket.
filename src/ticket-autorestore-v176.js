@@ -1,6 +1,6 @@
-/* Ticket. 1.0.76 — restauração automática no login, priorizando Google Drive.
+/* Ticket. 1.0.76 — restauração silenciosa no login, priorizando Google Drive.
    - Banco local vazio + Google configurado + token válido => restaura sozinho.
-   - Token ausente/expirado => mostra um banner de 1 clique para reautorizar.
+   - Não mostra nenhuma tela: a restauração manual continua em Configurações → Armazenamento.
    - Nunca sobrescreve dados locais mais novos: só restaura quando o local está vazio. */
 'use strict';
 (function(){
@@ -59,38 +59,15 @@
     return true;
   }
 
-  /* Banner de 1 clique: primeiro acesso num aparelho / token expirou. */
-  function showRestoreBanner(){
-    if(!googleEnabled()||!localEmpty())return;
-    if(document.querySelector('.ticket-restore-banner-v176'))return;
-    const el=document.createElement('div');
-    el.className='ticket-restore-banner-v176';
-    el.setAttribute('role','status');
-    el.innerHTML='<div class="ticket-restore-banner-inner-v176"><span><strong>Recuperar seus dados</strong><small>Conectar ao Google Drive e restaurar ponto, folgas e configura&ccedil;&otilde;es.</small></span><button class="primary" data-restore-bn>Recuperar do Google Drive</button></div>';
-    const host=document.querySelector('#content')||document.body;
-    host.insertBefore(el,host.firstChild);
-    el.querySelector('button[data-restore-bn]').onclick=async()=>{
-      el.querySelector('button').textContent='Conectando…';
-      try{
-        const token=await ticketCloudToken('google',{interactive:true}); // 1 clique p/ consentir
-        storeToken(token);
-        const payload=await pullGoogleBackup(token);
-        if(payload.profile.cpf===state.profile.cpf)await applyPayload(payload);
-        else toast('O backup não pertence a este perfil.');
-      }catch(err){toast(err.message||'Não foi possível recuperar agora.');el.remove();}
-    };
-  }
-
-  /* Gancha no final do login bem-sucedido (depois de carregar o estado local). */
+  /* Gancha no final do login bem-sucedido (depois de carregar o estado local).
+     Restauração silenciosa: nada é exibido; a restauração manual fica em Configurações. */
   const originalRenderShell=renderShell;
   renderShell=function(){
     const out=originalRenderShell();
     const cpf=state.profile?.cpf;
     if(cpf&&ranFor!==cpf){
       ranFor=cpf;
-      silentRestore()
-        .then(done=>{ if(done)return; showRestoreBanner(); })
-        .catch(()=>showRestoreBanner());
+      silentRestore().catch(()=>{});
     }
     return out;
   };
