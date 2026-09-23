@@ -167,6 +167,23 @@ const staticOptions={index:false,setHeaders(res,file){
   if(file.endsWith('index.html')||file.endsWith('config.js')||file.endsWith('version.json'))res.setHeader('Cache-Control','no-cache');
   else res.setHeader('Cache-Control','public, max-age=3600');
 }};
+/* Injeta o Google/Microsoft Client ID (via variável de ambiente) no config.js,
+   com fallback para o valor padrão abaixo. Sem env e sem fallback => campo vazio. */
+const CONFIG_TEMPLATE_PATH=path.join(WEB_ROOT,'public','config.js');
+const DEFAULT_GOOGLE_CLIENT_ID='365915632788-30afd2mv1a9rr42gjfjt9t0mui8tkmuf.apps.googleusercontent.com';
+function injectConfig(res){
+  let cfg;
+  try{cfg=readFileSync(CONFIG_TEMPLATE_PATH,'utf8');}
+  catch{cfg='window.TICKET_CONFIG={aiEndpoint:"/api/chat",googleClientId:"",microsoftClientId:"",microsoftTenant:"common"};';}
+  const google=String(process.env.GOOGLE_CLIENT_ID||'').trim()||DEFAULT_GOOGLE_CLIENT_ID;
+  const msft=String(process.env.MICROSOFT_CLIENT_ID||'').trim();
+  cfg=cfg.split('__GOOGLE_CLIENT_ID__').join(google).split('__MICROSOFT_CLIENT_ID__').join(msft);
+  res.type('application/javascript');
+  res.setHeader('Cache-Control','no-cache');
+  res.send(cfg);
+}
+app.get('/public/config.js',injectConfig);
+app.get('/config.js',injectConfig);
 app.use('/src',express.static(path.join(WEB_ROOT,'src'),staticOptions));
 app.use('/public',express.static(path.join(WEB_ROOT,'public'),staticOptions));
 app.get('/app.js',(req,res)=>res.sendFile(path.join(WEB_ROOT,'app.js')));

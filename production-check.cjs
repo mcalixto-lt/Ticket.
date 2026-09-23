@@ -14,12 +14,12 @@ for(const [,ref] of sw.matchAll(/['"]\/(?!api)([^'"?]+)(?:\?[^'"]*)?['"]/g)){
   if(!ref||ref==='index.html')continue;
   assert(fs.existsSync(path.join(root,ref)),`Cache ausente: ${ref}`);
 }
-assert(html.includes('ticket-cloud-v167.js?v=187'));
+assert(html.includes('ticket-cloud-v167.js?v=188'));
 assert(!html.includes('?v=167'));
-assert(sw.includes("ticket-app-v187"));
+assert(sw.includes("ticket-app-v188"));
 assert(!sw.includes('?v=167'));
-assert.strictEqual(JSON.parse(read('version.json')).version,'1.0.87');
-assert.strictEqual(JSON.parse(read('public/version.json')).version,'1.0.87');
+assert.strictEqual(JSON.parse(read('version.json')).version,'1.0.88');
+assert.strictEqual(JSON.parse(read('public/version.json')).version,'1.0.88');
 const render=read('render.yaml');
 assert(render.includes('name: ticket-app'));
 assert(render.includes('buildCommand: npm ci'));
