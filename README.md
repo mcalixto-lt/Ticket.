@@ -1,4 +1,4 @@
-# Ticket. 1.0.71
+# Ticket. 1.0.89
 
 O sininho avisa cinco minutos antes de 08h, 12h, 13h, 14h, 15h e 18h,
 enquanto o aplicativo está aberto. Não há envio push com o aplicativo fechado.
@@ -69,18 +69,33 @@ O servidor entrega o aplicativo e a API no mesmo endereço. A rota `/health` inf
 
 ## Google Drive e OneDrive
 
-A integração grava uma cópia completa chamada `Ticket_backup_atual.json`, incluindo cadastro, registros, fotos e configurações. Para ativá-la, edite `public/config.js`:
+A integração grava uma cópia completa chamada `Ticket_backup_atual.json`, incluindo cadastro, registros, fotos e configurações.
+
+### Configurar o Google Drive
+
+1. No Google Cloud, ative a **Google Drive API** no projeto escolhido.
+2. Em **Google Auth Platform**, configure Branding e Audience. Enquanto o app estiver em teste, adicione a conta que usará o Ticket em **Test users**.
+3. Em **Clients**, crie um cliente OAuth do tipo **Web application**.
+4. Em **Authorized JavaScript origins**, informe exatamente a origem HTTPS publicada, sem barra final. Para o serviço atual: `https://ticket-5cn6.onrender.com`.
+5. Copie apenas o **Client ID** terminado em `.apps.googleusercontent.com`. Não use o Client secret.
+6. No Ticket, abra **Armazenamento → Google Drive**, cole o Client ID e conecte a conta. O sistema cria a pasta `Ticket` e o arquivo `Ticket_backup_atual.json`.
+
+O Ticket valida o Client ID antes de abrir o Google. Valores vazios, placeholders e IDs com formato incorreto não são enviados ao OAuth, evitando a tela `401 invalid_client`.
+
+Opcionalmente, em um serviço Web Node no Render, defina `GOOGLE_CLIENT_ID` no painel. O servidor injeta o valor em tempo de execução. Em um Static Site, o formulário dentro de **Armazenamento** é o caminho compatível, pois o arquivo não passa pelo servidor Node.
+
+Configuração pública equivalente:
 
 ```js
 window.TICKET_CONFIG = {
   aiEndpoint: '/api/chat',
-  googleClientId: 'SEU_CLIENT_ID_GOOGLE',
+  googleClientId: '000000000000-xxxxx.apps.googleusercontent.com',
   microsoftClientId: 'SEU_CLIENT_ID_MICROSOFT',
   microsoftTenant: 'common'
 };
 ```
 
-No Google Cloud, crie um cliente OAuth do tipo aplicativo Web e autorize a origem HTTPS fornecida pelo Render. No Microsoft Entra, registre um aplicativo de página única, informe a mesma URL HTTPS e conceda acesso a arquivos do usuário. Os Client IDs são identificadores públicos; nunca coloque segredo de cliente neste arquivo.
+No Microsoft Entra, registre um aplicativo de página única, informe a mesma URL HTTPS e conceda acesso a arquivos do usuário. Os Client IDs são identificadores públicos; nunca coloque segredo de cliente neste arquivo.
 
 A sincronização ocorre enquanto o Ticket está aberto e a autorização da conta está válida. Se a sessão expirar, entre novamente pela tela **Armazenamento**. Antes de usar em produção, teste envio e restauração nas contas reais configuradas.
 
