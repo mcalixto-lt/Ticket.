@@ -18,7 +18,7 @@
    --------------------------------------------------------------- */
 window.TICKET_CONFIG={
   aiEndpoint:'/api/chat',
-  googleClientId:'365915632778-30afd2mv1a9rr42gjffjt9t0mui8tkmuf.apps.googleusercontent.com',
+  googleClientId:'365915632788-30afd2mv1a9rr42gjfjt9t0mui8tkmuf.apps.googleusercontent.com',
   microsoftClientId:'',
   microsoftTenant:'common'
 };
