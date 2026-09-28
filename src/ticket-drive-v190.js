@@ -72,6 +72,9 @@ async function ticketGoogleRequestTokenV190({interactive=false,force=false}={}){
   }
 
   ticketGoogleClearSessionV190();
+  // GIS may open a Google account chooser even with prompt: ''. Background
+  // sync must never request OAuth; only a direct user action may do that.
+  if(!interactive)throw Object.assign(new Error('Conecte novamente o Google Drive em Armazenamento para continuar o backup.'),{code:'reauth'});
   await v107LoadScript('https://accounts.google.com/gsi/client','ticketGoogleIdentity');
   return await new Promise((resolve,reject)=>{
     let settled=false;
@@ -119,7 +122,7 @@ async function ticketGoogleProbeV190(token){
   return true;
 }
 
-/* O teste agora renova silenciosamente e confirma a API do Drive de verdade. */
+/* Testa o acesso disponível sem abrir uma janela de autorização. */
 const autoBackupTestBeforeV190=autoBackupTest;
 autoBackupTest=async function(){
   const target=await autoBackupTarget();
@@ -130,7 +133,7 @@ autoBackupTest=async function(){
     catch(error){if(error.code!=='reauth')throw error;token=await ticketCloudToken('google',{interactive:false,force:true});await ticketGoogleProbeV190(token);}
     return{ok:true,label:'Google Drive'};
   }catch(error){
-    return{ok:false,label:'Google Drive',message:error.code==='reauth'?'O Google bloqueou a renovação silenciosa. Toque em Google Drive uma vez para reautorizar.':(error.message||'Falha ao testar o Google Drive.')};
+    return{ok:false,label:'Google Drive',message:error.code==='reauth'?'A sessão expirou. Toque em Google Drive para reconectar e retomar o backup.':(error.message||'Falha ao testar o Google Drive.')};
   }
 };
 
@@ -140,7 +143,7 @@ function ticketDecorateGoogleModalV190(){
     if(!form||form.querySelector('.ticket-google-help-v190'))return;
     const help=document.createElement('div');
     help.className='ticket-google-help-v190 ticket-google-help-v189';
-    help.innerHTML=`<strong>Configuração do Google Drive</strong><span>Conta conectada permanece ativa após atualizar o Ticket.</span><span>Origem autorizada: ${esc(location.origin)}</span><span>O sistema renova o acesso sem armazenar sua senha.</span>`;
+    help.innerHTML=`<strong>Configuração do Google Drive</strong><span>Acesso disponível enquanto a sessão autorizada estiver válida.</span><span>Origem autorizada: ${esc(location.origin)}</span><span>Se a sessão expirar, toque em Google Drive para reconectar e retomar a sincronização.</span>`;
     form.prepend(help);
   });
 }
@@ -157,7 +160,7 @@ ticketCloudSetupNotice=async function(label){
   return ticketCloudSetupBeforeV190(label);
 };
 
-/* Retoma a conta ao abrir, voltar ao aplicativo ou recuperar a internet. */
+/* Retoma a sincronização apenas com um token válido já concedido. */
 async function ticketGoogleResumeV190(){
   const now=Date.now();
   if(ticketGoogleResumeBusyV190||now-ticketGoogleResumeAtV190<5000||!navigator.onLine||!state.profile)return;

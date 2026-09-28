@@ -40,8 +40,11 @@ async function autoBackupTarget(){
 async function runAutoBackup(){
   const t=await autoBackupTarget();
   if(t.kind==='folder'){ticketFolderDirty=true;await ticketFlushFolder();return t.kind;}
-  if(t.kind==='google'){await ticketCloudWrite('google',{interactive:false});return t.kind;}
-  if(t.kind==='onedrive'){await ticketCloudWrite('onedrive',{interactive:false});return t.kind;}
+  if(t.kind==='google'||t.kind==='onedrive'){
+    const saved=await ticketCloudWrite(t.kind,{interactive:false});
+    if(!saved)throw Error('O backup na nuvem ainda não foi concluído.');
+    return t.kind;
+  }
   return'browser';
 }
 
@@ -112,18 +115,21 @@ renderView=function(){
 
 /* ---------- Agendamento: grava backup sozinho; NUNCA restaura ---------- */
 let autoBackupTimer=null;
+let autoBackupSweepBusy=false;
 function autoBackupSweep(){
-  if(!state.profile)return;
+  if(!state.profile||autoBackupSweepBusy)return;
   const due=autoBackupDueTimes();
   if(!due.length)return;
-  due.forEach(t=>autoBackupMarkFired(t));
+  autoBackupSweepBusy=true;
   runAutoBackup()
     .then(kind=>{
+      due.forEach(t=>autoBackupMarkFired(t));
       if(kind==='browser')return;
       const s=document.querySelector('#autobackupStatus-v173');
       if(s){s.className='is-ok';s.textContent='Backup automático realizado às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.';}
     })
-    .catch(()=>{});
+    .catch(()=>{})
+    .finally(()=>{autoBackupSweepBusy=false;});
 }
 function startAutoBackupLoop(){
   if(autoBackupTimer)return;

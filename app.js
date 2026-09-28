@@ -106,7 +106,7 @@ function reminderMessage(reminder){return reminder.minutesLeft===0?`Agora é hor
 function updateNotificationBell({announce=false}={}){
   const reminder=pointReminderStatus();
   document.querySelectorAll('[data-notification]').forEach(button=>{button.classList.toggle('has-alert',Boolean(reminder));button.setAttribute('aria-label',reminder?reminderMessage(reminder):`Próximo ponto às ${nextPointReminder().time}`);});
-  if(reminder&&announce){const key=`ticketReminder:${todayIso()}:${reminder.time}`;if(!localStorage.getItem(key)){localStorage.setItem(key,'1');toast(reminderMessage(reminder));}}
+  // O aviso permanece no sino. Nunca abre uma janela ao carregar a página.
   return reminder;
 }
 function toMinutes(time){ if(!/^\d{2}:\d{2}$/.test(String(time))) return null; const [h,m]=time.split(':').map(Number); return h*60+m; }
