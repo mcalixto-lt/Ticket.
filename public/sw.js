@@ -1,4 +1,4 @@
-const CACHE = 'ticket-app-v192';
+const CACHE = 'ticket-app-v193';
 const CORE = [
  '/src/ticket-journey-complete-v192.js?v=192',
  '/src/ticket-drive-v191.js?v=191',
@@ -12,7 +12,7 @@ const CORE = [
  '/src/ticket-adjustments-v170.css?v=188', '/src/ticket-adjustments-v170.js?v=188',
  '/src/ticket-unified-v169.css?v=188', '/src/ticket-unified-v169.js?v=188',
  '/src/ticket-restore-v168.css?v=188', '/src/ticket-restore-v168.js?v=188',
- '/public/config.js?v=188', '/src/ticket-cloud-v167.js?v=188',
+ '/public/config.js?v=193', '/src/ticket-cloud-v167.js?v=188',
  '/src/ticket-storage-v166.js?v=188',
  '/src/ticket-backup-v165.js?v=188', '/src/ticket-backup-v165.css?v=188',
 '/src/ticket-daymarks-v164.css?v=188', '/src/ticket-daymarks-v164.js?v=188',
