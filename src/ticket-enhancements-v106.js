@@ -257,13 +257,16 @@ submitCapture=async function(event){
   await saveRecord(record);
   clearUrls();state.receiptFile=null;state.receiptOriginalFile=null;state.photoQuality=null;state.environmentFile=null;state.environmentNote='';state.environmentWatermarkAt='';
   state.records=await listRecords(state.profile.cpf);
-  const success=document.createElement('div');
-  success.className='receipt-success-v158';
-  success.setAttribute('role','status');
-  success.innerHTML='<div><span aria-hidden="true">✓</span><h2>Comprovante Registrado</h2></div>';
-  document.body.append(success);
-  await new Promise(resolve=>setTimeout(resolve,1500));
-  success.remove();
+  const completedToday=d.date===todayIso()&&calculateRecord(record,state.schedule).complete;
+  if(!completedToday){
+    const success=document.createElement('div');
+    success.className='receipt-success-v158';
+    success.setAttribute('role','status');
+    success.innerHTML='<div><span aria-hidden="true">✓</span><h2>Comprovante Registrado</h2></div>';
+    document.body.append(success);
+    await new Promise(resolve=>setTimeout(resolve,1500));
+    success.remove();
+  }
   navigate('dashboard');
 };
 

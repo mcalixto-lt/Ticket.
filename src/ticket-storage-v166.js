@@ -16,31 +16,33 @@ function ticketCloudSetupNotice(provider){
 }
 storageView=function(){
   const folder=ticketFolder?.cpf===state.profile?.cpf?ticketFolder:null;
-  return `${head('Armazenamento','Escolha onde guardar e recuperar suas informações.')}<div class="ticket-storage-options"><button class="secondary" data-ticket-browser>${icon('records',25)}<span>Neste navegador<small>Salvamento local automático · veja o aviso de risco.</small></span></button><button class="secondary" data-ticket-cloud="Google Drive">${icon('cloud',25)}<span>Google Drive<small>Sincronização na conta · conexão ainda pendente.</small></span></button><button class="secondary" data-ticket-cloud="OneDrive">${icon('cloud',25)}<span>OneDrive<small>Sincronização na conta · conexão ainda pendente.</small></span></button><button class="secondary" data-ticket-folder>${icon('save',25)}<span>Celular ou cartão SD<small>${folder?`Pasta: ${esc(folder.dir.name)} · alterar ou reconectar`:'Autorizar acesso e escolher a pasta.'}</small></span></button></div><article class="panel"><h3>Recuperar informações</h3><p>Restaure fotos, registros, horários e configurações do arquivo salvo, mantendo as datas originais.</p><button class="primary full-action" data-ticket-choose="restore">${icon('records',22)} Restaurar</button></article>`;
+  return `${head('Armazenamento','Escolha onde guardar e recuperar suas informações.')}<div class="ticket-storage-options"><button class="secondary" data-ticket-browser>${icon('records',25)}<span>Neste navegador<small>Salvamento local automático · veja o aviso de risco.</small></span></button><button class="secondary" data-ticket-cloud="Google Drive">${icon('cloud',25)}<span>Google Drive<small>Sincronização na conta · conexão ainda pendente.</small></span></button><button class="secondary" data-ticket-cloud="OneDrive">${icon('cloud',25)}<span>OneDrive<small>Sincronização na conta · conexão ainda pendente.</small></span></button><button class="secondary" data-ticket-folder>${icon('save',25)}<span>Celular ou cartão SD<small>${folder?`Pasta: ${esc(folder.dir.name)} · alterar ou reconectar`:'Autorizar acesso e escolher a pasta.'}</small></span></button></div><p id="ticketStorageStatus" role="status">${esc(ticketFolderStatus)}</p><article class="panel"><h3>Recuperar informações</h3><p>Restaure fotos, registros, horários e configurações do arquivo salvo, mantendo as datas originais.</p><button class="primary full-action" data-ticket-choose="restore">${icon('records',22)} Restaurar</button></article>`;
 };
 async function ticketWriteFolder(target,blob){
   const writer=await target.file.createWritable();
   try{await writer.write(blob);await writer.close();}catch(error){try{await writer.abort();}catch{}throw error;}
 }
 async function ticketFlushFolder(){
-  if(ticketFolderWriting||ticketFolderSelecting||ticketBackupBusy||!ticketFolder||!ticketFolderDirty)return;
-  const target=ticketFolder;if(state.profile?.cpf!==target.cpf)return;
+  if(ticketFolderWriting||ticketFolderSelecting||ticketBackupBusy||!ticketFolder||!ticketFolderDirty)return false;
+  const target=ticketFolder;if(state.profile?.cpf!==target.cpf)return false;
   // Reconfere destino: se mudou para navegador, desliga a pasta silenciosamente
   let liveDest=null;try{liveDest=await getSetting(target.cpf,'internalStorageDestination',null);}catch{}
-  if(!liveDest||liveDest.mode!=='folder'){ticketFolder=null;ticketFolderDirty=false;clearTimeout(ticketFolderTimer);return;}
-  const cpfLive=target.cpf;if((state.profile?.cpf||'')!==cpfLive)return;
+  if(!liveDest||liveDest.mode!=='folder'){ticketFolder=null;ticketFolderDirty=false;clearTimeout(ticketFolderTimer);return false;}
+  const cpfLive=target.cpf;if((state.profile?.cpf||'')!==cpfLive)return false;
   ticketFolderWriting=true;ticketFolderDirty=false;
   ticketFolderStatusUpdate('Salvando a cópia completa na pasta…');
   try{
     if(await target.dir.queryPermission({mode:'readwrite'})!=='granted')throw Error('Reconecte a pasta para autorizar o salvamento.');
     const blob=await ticketCreateBackup();
-    if(ticketFolder!==target||state.profile?.cpf!==target.cpf)return;
+    if(ticketFolder!==target||state.profile?.cpf!==target.cpf)return false;
     await ticketWriteFolder(target,blob);
     ticketFolderStatusUpdate(`Salvo em ${target.dir.name} às ${new Date().toLocaleTimeString('pt-BR')}.`);
+    return true;
   }catch(error){
     // Falhou: mantém dirty para retry, sem toast assustador.
     ticketFolderDirty=true;
-    return;
+    ticketFolderStatusUpdate(`Salvamento pendente em ${target.dir.name}. Toque em Celular ou cartão SD para reconectar a pasta.`);
+    return false;
   }finally{ticketFolderWriting=false;}
 }
 async function ticketScheduleFolder(cpf){
@@ -70,6 +72,9 @@ async function ticketSelectFolder(){
     if(state.profile?.cpf!==cpf)return;
     ticketFolder=target;ticketFolderOwner=cpf;
     try{await saveSetting(cpf,'internalStorageDestination',{mode:'folder',dir,file});}catch{toast('Pasta conectada nesta sessão. Reconecte ao reabrir o Ticket.');}
+    if(typeof v107CloudConfig==='function'){
+      const cloud=v107CloudConfig();cloud.provider='local';v107SaveCloud();
+    }
     ticketFolderStatusUpdate(`Salvo em ${dir.name}. Atualização automática ativa enquanto o Ticket estiver aberto.`);
     ticketFolderDirty=true;toast('Pasta autorizada. Suas informações foram salvas.');
     if(state.view==='storage')renderView();
@@ -80,6 +85,9 @@ async function ticketUseBrowser(){
   if(ticketFolderWriting||ticketFolderSelecting){toast('Aguarde o salvamento atual terminar.');return;}
   try{
     await saveSetting(state.profile.cpf,'internalStorageDestination',{mode:'browser'});
+    if(typeof v107CloudConfig==='function'){
+      const cloud=v107CloudConfig();cloud.provider='local';v107SaveCloud();
+    }
     ticketFolder=null;ticketFolderDirty=false;clearTimeout(ticketFolderTimer);
     ticketFolderStatusUpdate('Salvamento no navegador ativo. Nenhuma cópia externa automática está conectada.');
     document.querySelector('#ticketBrowserChoice')?.close();if(state.view==='storage')renderView();

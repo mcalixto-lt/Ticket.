@@ -124,16 +124,19 @@ async function ticketGoogleProbeV190(token){
 
 /* Testa o acesso disponível sem abrir uma janela de autorização. */
 const autoBackupTestBeforeV190=autoBackupTest;
-autoBackupTest=async function(){
+autoBackupTest=async function({interactive=false}={}){
+  // The click handler passes interactive=true. Resolve the token before the
+  // first await so the OAuth window is tied to that explicit user gesture.
+  const pendingToken=interactive&&v107CloudConfig().provider==='google'
+    ?ticketCloudToken('google',{interactive:true}):null;
   const target=await autoBackupTarget();
   if(target.kind!=='google')return autoBackupTestBeforeV190();
   try{
-    let token=await ticketCloudToken('google',{interactive:false});
-    try{await ticketGoogleProbeV190(token);}
-    catch(error){if(error.code!=='reauth')throw error;token=await ticketCloudToken('google',{interactive:false,force:true});await ticketGoogleProbeV190(token);}
+    const token=await (pendingToken||ticketCloudToken('google',{interactive:false}));
+    await ticketGoogleProbeV190(token);
     return{ok:true,label:'Google Drive'};
   }catch(error){
-    return{ok:false,label:'Google Drive',message:error.code==='reauth'?'A sessão expirou. Toque em Google Drive para reconectar e retomar o backup.':(error.message||'Falha ao testar o Google Drive.')};
+    return{ok:false,label:'Google Drive',message:error.code==='reauth'?'A sessão expirou. Toque em Teste de comunicação ou Google Drive para reconectar.':(error.message||'Falha ao testar o Google Drive.')};
   }
 };
 
@@ -181,6 +184,19 @@ setTimeout(ticketGoogleResumeV190,2300);
 window.addEventListener('online',ticketGoogleResumeV190);
 window.addEventListener('focus',ticketGoogleResumeV190);
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')ticketGoogleResumeV190();});
+
+const ticketStorageViewBeforeV190=storageView;
+storageView=function(){
+  const template=document.createElement('template');
+  template.innerHTML=ticketStorageViewBeforeV190();
+  const button=template.content.querySelector('[data-ticket-cloud="Google Drive"]');
+  const detail=button?.querySelector('small');
+  if(detail&&v107CloudConfig().provider==='google'){
+    const active=Boolean(state.cloudTokens.google&&state.googleTokenExpiresAtV190>Date.now()+TICKET_GOOGLE_EXPIRY_MARGIN_V190)||Boolean(ticketGoogleReadSessionV190());
+    detail.textContent=active?'Acesso disponível · backups enquanto o Ticket estiver aberto.':'Autorização expirada · toque aqui para reconectar e retomar o backup.';
+  }
+  return template.innerHTML;
+};
 
 /* Impede que um Client ID inválido abra uma página 401. */
 document.addEventListener('submit',event=>{

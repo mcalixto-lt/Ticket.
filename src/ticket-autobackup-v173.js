@@ -29,8 +29,8 @@ async function autoBackupTarget(){
   let dest=null;
   try{dest=await getSetting(cpf,'internalStorageDestination',null);}catch{}
   const cloud=typeof v107CloudConfig==='function'?v107CloudConfig():{provider:'local'};
-  if(dest?.mode==='folder'&&typeof ticketFolder!=='undefined'&&ticketFolder&&ticketFolder.cpf===cpf)
-    return{kind:'folder',label:ticketFolder.dir.name};
+  if(dest?.mode==='folder')return{kind:'folder',label:dest.dir?.name||'Pasta selecionada'};
+  if(dest?.mode==='browser'&&cloud.provider==='local')return{kind:'browser',label:'Neste navegador'};
   if(cloud.provider==='google')return{kind:'google',label:'Google Drive'};
   if(cloud.provider==='onedrive')return{kind:'onedrive',label:'OneDrive'};
   return{kind:'browser',label:'Neste navegador'};
@@ -39,7 +39,13 @@ async function autoBackupTarget(){
 /* Executa SOMENTE o backup no destino ativo (não restaura nada). */
 async function runAutoBackup(){
   const t=await autoBackupTarget();
-  if(t.kind==='folder'){ticketFolderDirty=true;await ticketFlushFolder();return t.kind;}
+  if(t.kind==='folder'){
+    if(typeof ticketFolder==='undefined'||!ticketFolder||ticketFolder.cpf!==state.profile?.cpf)
+      throw Error('Reconecte a pasta selecionada em Armazenamento.');
+    ticketFolderDirty=true;
+    if(!await ticketFlushFolder())throw Error('Não foi possível salvar na pasta selecionada.');
+    return t.kind;
+  }
   if(t.kind==='google'||t.kind==='onedrive'){
     const saved=await ticketCloudWrite(t.kind,{interactive:false});
     if(!saved)throw Error('O backup na nuvem ainda não foi concluído.');
@@ -78,7 +84,7 @@ storageView=function(){
   const abCard=`
   <article class="panel autobackup-panel-v173">
     <h3>Backup Automático</h3>
-    <p>Executa backup automático nos horários 08:30, 12:30, 13:30, 14:30, 15:30 e 18:30, sem recuperar sozinho. A restauração só é feita quando você solicitar.</p>
+    <p>Enquanto o Ticket estiver aberto, atualiza o destino selecionado após cada alteração e verifica backups às 08:30, 12:30, 13:30, 14:30, 15:30 e 18:30. Se a conta ou pasta perder autorização, reconecte-a para continuar.</p>
     <div id="autobackupStatus-v173" role="status"></div>
     <div class="autobackup-actions-v173"><button class="secondary" data-autobackup-test>Teste de comunicação</button></div>
   </article>`;
@@ -104,7 +110,7 @@ renderView=function(){
       b.onclick=async()=>{
         const s=document.querySelector('#autobackupStatus-v173');
         if(s){s.className='';s.textContent='Testando comunicação…';}
-        const res=await autoBackupTest();
+        const res=await autoBackupTest({interactive:true});
         if(s){s.className=res.ok?'is-ok':'is-err';s.textContent=(res.ok?'Comunicação OK · Caminho: ':'Falha · Caminho: ')+res.label+(res.message?` — ${res.message}`:'');}
         if(!res.ok)toast(res.message||'Defina o local de salvamento automático.');
       };

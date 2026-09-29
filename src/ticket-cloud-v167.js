@@ -97,8 +97,11 @@ ticketCloudSetupNotice=async function(label){
   document.querySelectorAll('dialog.ticket-backup-dialog').forEach(d=>d.close());
   if(restore)await ticketCloudRead(provider);
   else{
-    const cloud=v107CloudConfig();cloud.provider=provider;v107SaveCloud();
-    if(await ticketCloudWrite(provider,{interactive:true})){toast(`Conta conectada. Sincronização com ${label} ativada.`);if(state.view==='storage')renderView();}
+    if(await ticketCloudWrite(provider,{interactive:true})){
+      await saveSetting(state.profile.cpf,'internalStorageDestination',{mode:'cloud',provider});
+      toast(`Conta conectada. Sincronização com ${label} ativada.`);
+      if(state.view==='storage')renderView();
+    }
   }
 };
 // Complementa os gatilhos locais: mudanças passam a atualizar também o provedor ativo.

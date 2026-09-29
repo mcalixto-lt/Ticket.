@@ -12,6 +12,8 @@ const context={
   ticketPublicConfig:()=>({googleClientId:clientId}),v107CloudConfig:()=>cloud,v107SaveCloud:()=>{},
   ticketApplyPublicCloudConfig:()=>{},ticketProviderConfigured:()=>{},ticketCloudToken:async()=>{},
   v107GoogleToken:async()=>{},autoBackupTest:async()=>{},ticketCloudSetupNotice:async()=>{},
+  storageView:()=>'',
+  autoBackupTarget:async()=>({kind:'google',label:'Google Drive'}),
   v107LoadScript:async()=>{scriptLoads++;},
   google:{accounts:{oauth2:{initTokenClient:({callback})=>({requestAccessToken:()=>{oauthCalls++;callback({access_token:'fresh-token',expires_in:3600});}})}}},
   fetch:async()=>({ok:true,json:async()=>({email:'user@example.com'})}),
@@ -33,5 +35,10 @@ vm.createContext(context);vm.runInContext(source,context);
   context.state.googleTokenExpiresAtV190=0;
   assert.equal(await context.ticketGoogleRequestTokenV190({interactive:false}),'fresh-token');
   assert.equal(oauthCalls,1,'sessionStorage access stays silent');
+  context.ticketGoogleClearSessionV190();
+  assert.equal((await context.autoBackupTest()).ok,false,'background test cannot open OAuth');
+  assert.equal(oauthCalls,1);
+  assert.equal((await context.autoBackupTest({interactive:true})).ok,true,'explicit test reconnects and probes Drive');
+  assert.equal(oauthCalls,2);
   console.log('PASS: Google login only on explicit connection; background sync reuses a valid token.');
 })().catch(error=>{console.error(error);process.exitCode=1;});
