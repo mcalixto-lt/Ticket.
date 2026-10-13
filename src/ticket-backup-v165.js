@@ -47,6 +47,10 @@ function ticketValidateBackupPayload(p){
   for(const s of p.settings)if(!s.key.startsWith(cpf+':')||s.key===cpf+':internalStorageDestination'||!Object.hasOwn(s,'value'))bad();
   const evidenceIds=new Set(p.evidence.map(e=>e.id));
   for(const r of p.records)for(const id of [...r.evidenceIds,...(r.environmentIds||[]),...r.punches.map(p=>p.evidenceId).filter(Boolean)])if(!evidenceIds.has(id))bad();
+  for(const r of p.records)if(r.absences!==undefined||r.absencePunches!==undefined){
+    if(typeof ticketAbsenceValidateV197!=='function')throw Error('Atualize o Ticket para restaurar os documentos de ausência deste backup.');
+    ticketAbsenceValidateV197(r,evidenceIds);
+  }
   return p;
 }
 async function ticketParseBackup(file){

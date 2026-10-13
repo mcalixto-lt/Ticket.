@@ -17,6 +17,7 @@ function ticketJourneyCompleteModalV192(record){
     <p>Bom descanso.</p>
     <div class="v111-complete-summary">
       <div><small>Total trabalhado</small><strong>${formatDuration(calc.workedMinutes)}</strong></div>
+      ${calc.creditedMinutes?`<div><small>Ausência abonada</small><strong>${formatDuration(calc.creditedMinutes)}</strong></div>`:''}
       <div><small>Saldo do dia</small><strong class="${calc.balanceMinutes>=0?'positive':'negative'}">${formatDuration(calc.balanceMinutes||0,{signed:true})}</strong></div>
     </div>
     <button type="button" class="primary" data-v111-close>Concluir</button>

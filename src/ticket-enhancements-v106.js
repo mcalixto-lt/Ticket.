@@ -241,14 +241,18 @@ submitCapture=async function(event){
   if(!state.receiptFile){toast('Capture ou escolha a foto do comprovante.');return;}
   if(!document.querySelector('#recordLockConfirm')?.checked){toast('Confirme a revisão e o bloqueio definitivo do registro.');return;}
   const d=Object.fromEntries(new FormData(event.currentTarget));
+  const requestedType=d.type;
   const info=v105NextPunchInfo(d.date);d.type=info.type;
+  const absenceChoice=typeof ticketAbsenceCaptureChoiceV197==='function'?ticketAbsenceCaptureChoiceV197(d.date,requestedType,d.time):null;
+  if(absenceChoice?.error){toast(absenceChoice.error);return;}
+  if(absenceChoice)d.type=absenceChoice.type;
   if(!d.type){toast('Essa data já possui todas as batidas previstas.');return;}
   if(!d.time){toast('Informe o horário exibido no comprovante.');return;}
   const existing=await getRecord(state.profile.cpf,d.date);
   const snapshot=existing?.scheduleSnapshot||scheduleForDate(d.date,state.schedule);
   if(!snapshot.active&&!confirm('Este dia está configurado como folga. Deseja continuar?'))return;
   const record=existing?{...existing,punches:[...(existing.punches||[])],evidenceIds:[...(existing.evidenceIds||[])],environmentIds:[...(existing.environmentIds||[])]}:{id:`${state.profile.cpf}:${d.date}`,profileCpf:state.profile.cpf,date:d.date,punches:[],evidenceIds:[],environmentIds:[],scheduleSnapshot:snapshot,createdAt:new Date().toISOString(),lockPolicy:'append-only',immutablePunches:true};
-  if(record.punches.some(p=>p.type===d.type)){toast('Essa batida já foi registrada e está bloqueada.');return;}
+  if(d.type==='medical_return'?(record.absencePunches||[]).some(p=>p.absenceId===absenceChoice.absenceId):record.punches.some(p=>p.type===d.type)){toast('Essa batida já foi registrada e está bloqueada.');return;}
   const now=new Date().toISOString();
   const receiptId=uuid();
   const receiptBlob=await fileToBlob(state.receiptFile);
@@ -259,7 +263,9 @@ submitCapture=async function(event){
     await saveEvidence({id:envId,profileCpf:state.profile.cpf,date:d.date,type:'environment',blob:envBlob,createdAt:now,lockedAt:now,immutable:true,watermarkAt:state.environmentWatermarkAt||now,note:String(state.environmentNote||'').trim(),integrityHash:await evidenceHash(envBlob)});
     record.environmentIds.push(envId);
   }
-  record.punches.push({id:uuid(),type:d.type,time:d.time,note:'',evidenceId:receiptId,createdAt:now,lockedAt:now,immutable:true});
+  const punch={id:uuid(),type:d.type,time:d.time,note:'',evidenceId:receiptId,createdAt:now,lockedAt:now,immutable:true};
+  if(d.type==='medical_return')record.absencePunches=[...(record.absencePunches||[]),{...punch,absenceId:absenceChoice.absenceId}];
+  else record.punches.push(punch);
   record.punches.sort((a,b)=>toMinutes(a.time)-toMinutes(b.time));record.immutablePunches=true;record.lockPolicy='append-only';record.updatedAt=now;
   await saveRecord(record);
   clearUrls();state.receiptFile=null;state.receiptOriginalFile=null;state.photoQuality=null;state.environmentFile=null;state.environmentNote='';state.environmentWatermarkAt='';

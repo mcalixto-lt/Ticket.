@@ -16,13 +16,13 @@ for(const [,ref] of sw.matchAll(/['"]\/(?!api)([^'"?]+)(?:\?[^'"]*)?['"]/g)){
 }
 assert(html.includes('ticket-cloud-v167.js?v=195'));
 assert(html.includes('ticket-drive-v190.js?v=195'));
-assert(html.includes('ticket-drive-v191.js?v=191'));
-assert(html.includes('ticket-journey-complete-v192.js?v=192'));
+assert(html.includes('ticket-drive-v191.js?v=197'));
+assert(html.includes('ticket-journey-complete-v192.js?v=197'));
 assert(!html.includes('?v=167'));
-assert(sw.includes("ticket-app-v196"));
+assert(sw.includes("ticket-app-v197"));
 assert(!sw.includes('?v=167'));
-assert.strictEqual(JSON.parse(read('version.json')).version,'1.0.96');
-assert.strictEqual(JSON.parse(read('public/version.json')).version,'1.0.96');
+assert.strictEqual(JSON.parse(read('version.json')).version,'1.0.97');
+assert.strictEqual(JSON.parse(read('public/version.json')).version,'1.0.97');
 const render=read('render.yaml');
 assert(render.includes('name: ticket-app'));
 assert(render.includes('buildCommand: npm ci'));

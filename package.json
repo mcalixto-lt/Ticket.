@@ -1,11 +1,11 @@
 {
   "name": "ticket-app",
-  "version": "1.0.96",
+  "version": "1.0.97",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node server/index.mjs",
-    "test": "node tests/backup.cjs && node tests/bank-days-off.cjs && node tests/daymarks.cjs && node tests/storage-folder.cjs && node tests/google-drive-config.cjs && node tests/google-auth-interaction.cjs && node tests/capture-confirmation.cjs && node tests/production-check.cjs"
+    "test": "node tests/backup.cjs && node tests/bank-days-off.cjs && node tests/daymarks.cjs && node tests/storage-folder.cjs && node tests/google-drive-config.cjs && node tests/google-auth-interaction.cjs && node tests/capture-confirmation.cjs && node tests/absence.cjs && node tests/absence-integration.cjs && node tests/production-check.cjs"
   },
   "engines": {
     "node": ">=20"
@@ -13,5 +13,9 @@
   "dependencies": {
     "@google/genai": "2.14.0",
     "express": "5.1.0"
+  },
+  "devDependencies": {
+    "fake-indexeddb": "6.2.4",
+    "linkedom": "0.18.13"
   }
 }

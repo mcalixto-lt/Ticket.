@@ -63,14 +63,14 @@ async function ticketDrivePutBackupV191(token,folderId,blob){
 }
 
 function ticketDriveEvidenceDescriptionV191(evidence){
-  let record=null,punch=null,kind='Comprovante';
+  let record=null,punch=null,kind=evidence.type==='medical_document'?'DocumentoMedico':'Comprovante';
   for(const candidate of state.records||[]){
-    const matched=(candidate.punches||[]).find(item=>item.evidenceId===evidence.id);
+    const matched=[...(candidate.punches||[]),...(candidate.absencePunches||[])].find(item=>item.evidenceId===evidence.id);
     if(matched){record=candidate;punch=matched;break;}
     if((candidate.environmentIds||[]).includes(evidence.id)){record=candidate;kind='Ambiente';break;}
     if((candidate.evidenceIds||[]).includes(evidence.id)){record=candidate;break;}
   }
-  const labels={entry:'Entrada',lunch:'Almoco',return:'Retorno',exit:'Saida'};
+  const labels={entry:'Entrada',lunch:'Almoco',return:'Retorno',exit:'Saida',medical_return:'RetornoAusencia'};
   if(punch)kind=labels[punch.type]||'Comprovante';
   const date=record?.date||String(evidence.createdAt||evidence.takenAt||todayIso()).slice(0,10);
   const time=(punch?.time||String(evidence.createdAt||evidence.takenAt||'').slice(11,16)||'0000').replace(':','');

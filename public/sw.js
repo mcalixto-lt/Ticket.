@@ -1,7 +1,8 @@
-const CACHE = 'ticket-app-v196';
+const CACHE = 'ticket-app-v197';
 const CORE = [
- '/src/ticket-journey-complete-v192.js?v=192',
- '/src/ticket-drive-v191.js?v=191',
+ '/src/ticket-absence-core-v197.js?v=197', '/src/ticket-absence-v197.js?v=197', '/src/ticket-absence-v197.css?v=197',
+ '/src/ticket-journey-complete-v192.js?v=197',
+ '/src/ticket-drive-v191.js?v=197',
  '/src/ticket-drive-v190.js?v=195',
  '/src/ticket-idle-v174.js?v=188',
  '/src/ticket-autorestore-v176.css?v=188', '/src/ticket-autorestore-v176.js?v=188',
@@ -14,7 +15,7 @@ const CORE = [
  '/src/ticket-restore-v168.css?v=188', '/src/ticket-restore-v168.js?v=188',
  '/public/config.js?v=193', '/src/ticket-cloud-v167.js?v=195',
  '/src/ticket-storage-v166.js?v=195',
- '/src/ticket-backup-v165.js?v=188', '/src/ticket-backup-v165.css?v=188',
+ '/src/ticket-backup-v165.js?v=197', '/src/ticket-backup-v165.css?v=188',
 '/src/ticket-daymarks-v164.css?v=188', '/src/ticket-daymarks-v164.js?v=188',
   '/src/ticket-bank-v163.js?v=188', '/src/ticket-bank-v163.css?v=188',
   '/src/ticket-navigation-v162.js?v=188', '/src/ticket-navigation-v162.css?v=188',
@@ -22,7 +23,7 @@ const CORE = [
   '/', '/index.html', '/app.js?v=194', '/src/styles.css?v=188', '/src/mobile-auth.css?v=188', '/src/ticket-auth-v145.css?v=188', '/src/ticket-home-v150.css?v=188',
   '/src/settings-capture-v103.css?v=188', '/src/ticket-enhancements-v103.js?v=188', '/src/ticket-fixes-v104.css?v=188', '/src/ticket-fixes-v104.js?v=188',
   '/src/ticket-enhancements-v105.css?v=188', '/src/ticket-enhancements-v105.js?v=188', '/src/ticket-hotfix-v105.js?v=188',
-  '/src/ticket-enhancements-v106.css?v=188', '/src/ticket-enhancements-v106.js?v=196', '/src/ticket-enhancements-v107.css?v=188', '/src/ticket-enhancements-v107.js?v=188',
+  '/src/ticket-enhancements-v106.css?v=188', '/src/ticket-enhancements-v106.js?v=197', '/src/ticket-enhancements-v107.css?v=188', '/src/ticket-enhancements-v107.js?v=188',
   '/src/ticket-ai-v108.js?v=188', '/src/ticket-ai-v109.js?v=188', '/src/ticket-ai-v110.js?v=188', '/src/ticket-enhancements-v111.css?v=188', '/src/ticket-enhancements-v111.js?v=188', '/src/ticket-ai-v111.js?v=188',
   '/src/ticket-enhancements-v112.css?v=188', '/src/ticket-enhancements-v112.js?v=188', '/src/ticket-enhancements-v113.css?v=188', '/src/ticket-enhancements-v113.js?v=188',
   '/src/ticket-enhancements-v114.css?v=188', '/src/ticket-enhancements-v114.js?v=188', '/src/ticket-enhancements-v115.css?v=188', '/src/ticket-enhancements-v115.js?v=188',
