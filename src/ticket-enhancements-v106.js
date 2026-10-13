@@ -229,6 +229,13 @@ bindCapture=function(){
   }
 };
 
+function ticketLunchReturnTimeV196(time){
+  if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(String(time)))return null;
+  const total=toMinutes(time)+120;
+  const minutes=total%1440;
+  return {time:`${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}`,nextDay:total>=1440};
+}
+
 submitCapture=async function(event){
   event.preventDefault();
   if(!state.receiptFile){toast('Capture ou escolha a foto do comprovante.');return;}
@@ -262,9 +269,15 @@ submitCapture=async function(event){
     const success=document.createElement('div');
     success.className='receipt-success-v158';
     success.setAttribute('role','status');
-    success.innerHTML='<div><span aria-hidden="true">✓</span><h2>Comprovante Registrado</h2></div>';
+    const lunchReturn=d.type==='lunch'?ticketLunchReturnTimeV196(d.time):null;
+    success.innerHTML=`<div><span aria-hidden="true">✓</span><h2>Comprovante Registrado</h2>${lunchReturn?`<p class="ticket-lunch-time">Ponto de almoço registrado às ${esc(d.time)}h</p><div class="ticket-lunch-return">${icon('clock',26)}<p>Você voltará às <strong>${lunchReturn.time}h</strong>${lunchReturn.nextDay?' do dia seguinte':''}</p><small>Intervalo de almoço: 2 horas</small></div><button type="button" class="primary ticket-lunch-close">Entendido</button>`:''}</div>`;
     document.body.append(success);
-    await new Promise(resolve=>setTimeout(resolve,1500));
+    await new Promise(resolve=>{
+      const timer=setTimeout(resolve,lunchReturn?6000:1500);
+      const button=success.querySelector('.ticket-lunch-close');
+      button?.addEventListener('click',()=>{clearTimeout(timer);resolve();},{once:true});
+      button?.focus({preventScroll:true});
+    });
     success.remove();
   }
   navigate('dashboard');
