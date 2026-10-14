@@ -54,7 +54,7 @@ async function get(store,id){const d=await database;return new Promise((resolve,
  state.receiptFile={};vm.runInContext(production.slice(begin,finish),ctx);await ctx.submitCapture({preventDefault(){},currentTarget:{}});
  assert.equal(state.records[0].punches.length,1,'medical return must not become a lunch punch');assert.equal(state.records[0].absencePunches[0].type,'medical_return');assert.equal(state.records[0].absencePunches[0].time,'10:30');
  ctx.listRecords=storedList;
- const page=ctx.ticketAbsenceFormV197();assert.match(page,/ticketAbsencePhoto/);assert.match(page,/Direto de casa/);assert.match(page,/30 min de ida/);
+ const page=ctx.ticketAbsenceFormV197();assert.match(page,/ticketAbsencePhoto/);assert.match(page,/Direto de casa/);assert(!page.includes('30 min'));assert(!page.includes('Intervalo previsto'));assert.match(page,/ticket-absence-document-pair/);assert.match(page,/ticket-absence-divider/);assert(!page.includes('Tipo de documento'));
  state.view='records';assert.match(ctx.recordCard(state.records[0]),/Ver documento/);assert.match(ctx.v105ReportRecord(state.records[0]),/Ausência justificada/);
  // Round-trip through the production backup parser, preserving document bytes,
  // timestamps, the policy and captured medical returns.

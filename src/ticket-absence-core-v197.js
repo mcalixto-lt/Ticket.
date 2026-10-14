@@ -1,6 +1,6 @@
 /* Ticket. 1.0.97 — cálculo de ausências e regra informada da empresa. */
 'use strict';
-const TICKET_ABSENCE_TRAVEL_V197=30;
+
 function ticketAbsenceMinuteV197(time){
   if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(String(time||'')))return null;
   const [h,m]=time.split(':').map(Number);return h*60+m;
@@ -42,7 +42,9 @@ function ticketAbsenceValidateV197(record,evidenceIds){
     if(!a||typeof a.id!=='string'||!a.id||ids.has(a.id)||!['declaration','certificate'].includes(a.documentType)||!['home','work'].includes(a.origin)||typeof a.applyCredit!=='boolean'||typeof a.fullDay!=='boolean')throw Error('Registro de ausência inválido.');
     ids.add(a.id);
     if(typeof a.evidenceId!=='string'||!a.evidenceId||(evidenceIds&&!evidenceIds.has(a.evidenceId)))throw Error('Foto do documento de ausência não encontrada.');
-    if(a.travelBefore!==30||a.travelAfter!==30||a.policySource!=='company-informed')throw Error('Regra de deslocamento inválida.');
+    const legacy=a.travelBefore===30&&a.travelAfter===30&&a.policySource==='company-informed';
+    const documented=a.travelBefore===0&&a.travelAfter===0&&a.policySource==='document-period';
+    if(!legacy&&!documented)throw Error('Período de abono inválido.');
     if(a.fullDay&&a.documentType!=='certificate')throw Error('Afastamento do dia inteiro exige atestado.');
     if(!a.fullDay){
       const s=ticketAbsenceMinuteV197(a.appointmentStart),e=ticketAbsenceMinuteV197(a.appointmentEnd);
@@ -102,7 +104,8 @@ function ticketAbsenceCalculateV197(record,day){
     if(a.fullDay){if(a.applyCredit)coverage.push([sch.start,sch.end]);continue;}
     const start=ticketAbsenceMinuteV197(a.appointmentStart),end=ticketAbsenceMinuteV197(a.appointmentEnd);
     appointment+=end-start;
-    if(a.applyCredit)coverage.push([Math.max(0,start-a.travelBefore),Math.min(1440,end+a.travelAfter)]);
+    // Legacy travel metadata remains readable in old backups, but never adds credit.
+    if(a.applyCredit)coverage.push([start,end]);
   }
   // Only scheduled time actually not worked is creditable. Interval union and
   // the daily deficit cap prevent duplicate documents and credited overtime.

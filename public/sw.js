@@ -1,6 +1,6 @@
-const CACHE = 'ticket-app-v197';
+const CACHE = 'ticket-app-v198';
 const CORE = [
- '/src/ticket-absence-core-v197.js?v=197', '/src/ticket-absence-v197.js?v=197', '/src/ticket-absence-v197.css?v=197',
+ '/src/ticket-absence-core-v197.js?v=198', '/src/ticket-absence-v197.js?v=198', '/src/ticket-absence-v197.css?v=198',
  '/src/ticket-journey-complete-v192.js?v=197',
  '/src/ticket-drive-v191.js?v=197',
  '/src/ticket-drive-v190.js?v=195',
